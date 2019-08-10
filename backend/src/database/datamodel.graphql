@@ -1,0 +1,35 @@
+type User {
+  id: ID! @id
+  twitterId: ID @unique
+  createdAt: DateTime! @createdAt
+  name: String!
+  email: String! @unique
+  password: String!
+  image: String!
+  confirmed: Boolean! @default(value: false)
+  forgotPasswordLock: Boolean! @default(value: false)
+  role: Role! @default(value: USER)
+  palettes: [Palette]
+}
+
+type Palette {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  title: String!
+  colors: [String!]! @scalarList(strategy: RELATION)
+  names: [String!]! @scalarList(strategy: RELATION)
+  tags: [Tag]
+  likes: Int @default(value: 0)
+  owner: User
+}
+
+type Tag {
+  id: ID! @id
+  text: String!
+  palette: Palette
+}
+
+enum Role {
+  ADMIN
+  USER
+}
