@@ -18,6 +18,7 @@ const yOff = 0.0015
 const zOff = 0.0015
 const backgroundColor = 'hsla(0, 0%, 5%, 1)'
 const TAU = 2 * PI
+const offsetH = 0
 
 const rand = n => n * random()
 
@@ -28,6 +29,7 @@ const fadeInOut = (t, m) => {
 
 const Canvas = styled.canvas`
   position: absolute;
+  z-index: 1;
 `
 
 const AmbientBackground = () => {
@@ -37,7 +39,6 @@ const AmbientBackground = () => {
     let circleProps
     let simplex
     let baseHue
-    const offsetH = 80
     const c1 = document.createElement('canvas')
     const c2 = canvas.current
     const ctx1 = c1.getContext('2d')
@@ -46,6 +47,8 @@ const AmbientBackground = () => {
     resize()
     initCircles()
     draw()
+
+    window.addEventListener('resize', resize)
 
     function resize() {
       const { innerWidth: w, innerHeight: h } = window
@@ -151,6 +154,10 @@ const AmbientBackground = () => {
       updateCircles()
       render()
       window.requestAnimationFrame(draw)
+    }
+
+    return () => {
+      window.removeEventListener('resize', resize)
     }
   }, [])
 

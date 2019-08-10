@@ -13,8 +13,7 @@ export const UserContext = React.createContext({
 export const LayoutWrapper = styled.div``
 
 export const Main = styled.main`
-  height: calc(100vh - 30px);
-  padding-top: ${p => p.theme.headerHeight}px;
+  min-height: calc(100vh - 30px);
 `
 
 class Layout extends React.Component {

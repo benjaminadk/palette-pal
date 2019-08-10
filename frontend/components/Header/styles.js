@@ -2,11 +2,12 @@ import styled from 'styled-components'
 
 export const HeaderWrapper = styled.header`
   position: fixed;
+  z-index: 4;
   width: 100%;
   height: ${p => p.theme.headerHeight}px;
   display: grid;
   grid-template-columns: 100px 1fr 300px;
-  background: ${p => p.theme.primary};
+  background: ${p => p.theme.primary}20;
 `
 
 export const Logo = styled.div`
