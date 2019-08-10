@@ -1,3 +1,3 @@
-const Home = props => <div {...props} />
+import Landing from '../components/Landing'
 
-export default Home
+export default props => <Landing {...props} />

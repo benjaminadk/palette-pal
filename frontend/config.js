@@ -24,5 +24,6 @@ export const theme = {
     '#222222'
   ],
   fontRegular: `'Roboto-Regular', Arial, Helvetica, sans-serif`,
-  fontBold: `'Roboto-Bold', Arial, Helvetica, sans-serif`
+  fontBold: `'Roboto-Bold', Arial, Helvetica, sans-serif`,
+  headerHeight: 50
 }

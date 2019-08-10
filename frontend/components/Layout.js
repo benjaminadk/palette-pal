@@ -10,6 +10,13 @@ export const UserContext = React.createContext({
   toggleShowRegister: () => {}
 })
 
+export const LayoutWrapper = styled.div``
+
+export const Main = styled.main`
+  height: calc(100vh - 30px);
+  padding-top: ${p => p.theme.headerHeight}px;
+`
+
 class Layout extends React.Component {
   state = {
     showRegister: false,
@@ -30,9 +37,9 @@ class Layout extends React.Component {
 
             return (
               <UserContext.Provider value={{ user, toggleShowRegister: this.toggleShowRegister }}>
-                <>
+                <LayoutWrapper>
                   <Header />
-                  <main>{this.props.children}</main>
+                  <Main>{this.props.children}</Main>
                   <footer>footer</footer>
                   <Register
                     show={this.state.showRegister}
@@ -40,7 +47,7 @@ class Layout extends React.Component {
                     toggleShowConfirm={this.toggleShowConfirm}
                   />
                   <Confirm show={this.state.showConfirm} />
-                </>
+                </LayoutWrapper>
               </UserContext.Provider>
             )
           }}

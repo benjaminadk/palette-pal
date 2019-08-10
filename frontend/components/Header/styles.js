@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const HeaderWrapper = styled.header`
   position: fixed;
   width: 100%;
-  height: 50px;
+  height: ${p => p.theme.headerHeight}px;
   display: grid;
   grid-template-columns: 100px 1fr 300px;
   background: ${p => p.theme.primary};
