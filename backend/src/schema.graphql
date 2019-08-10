@@ -2,7 +2,13 @@
 
 type Query {
   currentUser: User
-  users: [User]
+  palettes(where: PaletteWhereInput, orderBy: PaletteOrderByInput, skip: Int, first: Int): [Palette]
+  palettesConnection(
+    where: PaletteWhereInput
+    orderBy: PaletteOrderByInput
+    skip: Int
+    first: Int
+  ): PaletteConnection
 }
 
 type Mutation {

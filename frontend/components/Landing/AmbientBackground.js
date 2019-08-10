@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import SimplexNoise from '../lib/SimplexNoise'
+import SimplexNoise from '../../lib/SimplexNoise'
 
 const { PI, cos, sin, abs, random } = Math
 const circleCount = 150
@@ -8,8 +8,8 @@ const circlePropCount = 8
 const circlePropsLength = circleCount * circlePropCount
 const baseSpeed = 0.1
 const rangeSpeed = 1
-const baseTTL = 50 // 150
-const rangeTTL = 80 // 200
+const baseTTL = 50
+const rangeTTL = 80
 const baseRadius = 100
 const rangeRadius = 200
 const rangeHue = 60
@@ -132,7 +132,7 @@ const AmbientBackground = () => {
 
     function drawCircle(x, y, life, ttl, radius, hue) {
       ctx1.save()
-      ctx1.fillStyle = `hsla(${hue}, 70%, 40%, ${fadeInOut(life, ttl)})` // 60% 30%
+      ctx1.fillStyle = `hsla(${hue}, 70%, 40%, ${fadeInOut(life, ttl)})`
       ctx1.beginPath()
       ctx1.arc(x, y, radius, 0, TAU)
       ctx1.fill()

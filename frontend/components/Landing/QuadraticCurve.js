@@ -12,7 +12,7 @@ function generatePoints(nbOfPoints, w, h) {
   for (let i = 0; i <= nbOfPoints; i++) {
     pts.push({
       x: i * (w / nbOfPoints),
-      y: Math.random() * h
+      y: h * (i % 3 === 0 ? 0.5 : i % 3 === 1 ? 0 : 1)
     })
   }
 
@@ -46,8 +46,8 @@ const QuadraticCurve = () => {
 
     ctx.quadraticCurveTo(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y)
     ctx.stroke()
-    ctx.lineTo(points[points.length - 1].x, h) // bottom-right
-    ctx.lineTo(points[0].x, h) // bottom-left
+    ctx.lineTo(points[points.length - 1].x, h)
+    ctx.lineTo(points[0].x, h)
     ctx.fill()
   }, [])
 
