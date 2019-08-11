@@ -11,7 +11,7 @@ import {
   PaletteDate
 } from './styles'
 
-const Palette = ({ palette, pathname }) => {
+const Palette = ({ palette, pathname, onAvatarClick }) => {
   const { id, title, colors, names, totalLikes, likes, tags, owner, createdAt } = palette
   const allColors = colors.filter(color => color)
 
@@ -34,7 +34,7 @@ const Palette = ({ palette, pathname }) => {
           </PaletteColors>
           <PaletteBottom>
             <Likes pathname={pathname} user={user} id={id} likes={likes} totalLikes={totalLikes} />
-            <PaletteAvatar src={owner.image} />
+            <PaletteAvatar src={owner.image} onClick={() => onAvatarClick(owner.name)} />
             <PaletteDate>{formatDistance(createdAt)}</PaletteDate>
           </PaletteBottom>
         </PaletteWrapper>

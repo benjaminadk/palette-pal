@@ -61,12 +61,17 @@ const Palettes = ({ pathname }) => {
 
   return (
     <PaletteContext.Consumer>
-      {({ loading, palettes, fetchMorePalettes }) => (
+      {({ loading, palettes, onAvatarClick, fetchMorePalettes }) => (
         <PalettesWrapper onScroll={e => onScroll(e, fetchMorePalettes)}>
           <PalettesSearch searchRef={search} />
           <PalettesGrid>
             {palettes.map(palette => (
-              <Palette key={palette.id} palette={palette} pathname={pathname} />
+              <Palette
+                key={palette.id}
+                palette={palette}
+                pathname={pathname}
+                onAvatarClick={onAvatarClick}
+              />
             ))}
           </PalettesGrid>
           <AutoReturn show={showAutoReturn} onClick={onAutoReturn}>

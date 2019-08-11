@@ -18,6 +18,7 @@ export const PaletteContext = React.createContext({
   searchTerm: '',
   setSearchTerm: () => {},
   onSearchTermChange: () => {},
+  onAvatarClick: () => {},
   fetchPalettes: () => {},
   refetchPalettes: () => {},
   fetchMorePalettes: () => {}
@@ -109,6 +110,18 @@ const Layout = ({ pathname, children }) => {
     fetchPalettesDebounced(fetchPalettes)
   }
 
+  async function onAvatarClick(username) {
+    await setSearchTerm(username)
+    await setLoading(true)
+    const res = await client.query({
+      query: SEARCH_PALETTES_QUERY,
+      variables: { searchTerm: username, first: perPage, skip: 0, orderBy, ownerId }
+    })
+    setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
+    setPalettes(res.data.palettes)
+    setLoading(false)
+  }
+
   if (userLoading) return null
   const user = data.currentUser
 
@@ -124,6 +137,7 @@ const Layout = ({ pathname, children }) => {
             onSearchTermChange,
             orderBy,
             setOrderBy,
+            onAvatarClick,
             fetchPalettes,
             refetchPalettes,
             fetchMorePalettes

@@ -6,7 +6,7 @@ import TextInput from '../TextInput'
 export const SearchInputWrapper = styled.form`
   display: flex;
   align-items: center;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
   input {
     margin-bottom: 0;
     border-top-right-radius: 0;
