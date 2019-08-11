@@ -29,7 +29,13 @@ export const SEARCH_PALETTES_QUERY = gql`
       title
       colors
       names
-      likes
+      totalLikes
+      likes {
+        id
+        user {
+          id
+        }
+      }
       tags {
         id
         text

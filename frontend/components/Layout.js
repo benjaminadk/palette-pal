@@ -65,6 +65,7 @@ class Layout extends React.Component {
   }
 
   render() {
+    console.log(this.state.palettes)
     return (
       <ThemeProvider theme={theme}>
         <User>

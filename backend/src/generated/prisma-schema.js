@@ -27,8 +27,8 @@ scalar DateTime
 
 type Like {
   id: ID!
-  palette: Palette!
-  user: User!
+  palette: Palette
+  user: User
 }
 
 type LikeConnection {
@@ -39,8 +39,8 @@ type LikeConnection {
 
 input LikeCreateInput {
   id: ID
-  palette: PaletteCreateOneWithoutLikesInput!
-  user: UserCreateOneWithoutLikesInput!
+  palette: PaletteCreateOneWithoutLikesInput
+  user: UserCreateOneWithoutLikesInput
 }
 
 input LikeCreateManyWithoutPaletteInput {
@@ -55,12 +55,12 @@ input LikeCreateManyWithoutUserInput {
 
 input LikeCreateWithoutPaletteInput {
   id: ID
-  user: UserCreateOneWithoutLikesInput!
+  user: UserCreateOneWithoutLikesInput
 }
 
 input LikeCreateWithoutUserInput {
   id: ID
-  palette: PaletteCreateOneWithoutLikesInput!
+  palette: PaletteCreateOneWithoutLikesInput
 }
 
 type LikeEdge {
@@ -116,8 +116,8 @@ input LikeSubscriptionWhereInput {
 }
 
 input LikeUpdateInput {
-  palette: PaletteUpdateOneRequiredWithoutLikesInput
-  user: UserUpdateOneRequiredWithoutLikesInput
+  palette: PaletteUpdateOneWithoutLikesInput
+  user: UserUpdateOneWithoutLikesInput
 }
 
 input LikeUpdateManyWithoutPaletteInput {
@@ -143,11 +143,11 @@ input LikeUpdateManyWithoutUserInput {
 }
 
 input LikeUpdateWithoutPaletteDataInput {
-  user: UserUpdateOneRequiredWithoutLikesInput
+  user: UserUpdateOneWithoutLikesInput
 }
 
 input LikeUpdateWithoutUserDataInput {
-  palette: PaletteUpdateOneRequiredWithoutLikesInput
+  palette: PaletteUpdateOneWithoutLikesInput
 }
 
 input LikeUpdateWithWhereUniqueWithoutPaletteInput {
@@ -467,10 +467,12 @@ input PaletteUpdatenamesInput {
   set: [String!]
 }
 
-input PaletteUpdateOneRequiredWithoutLikesInput {
+input PaletteUpdateOneWithoutLikesInput {
   create: PaletteCreateWithoutLikesInput
   update: PaletteUpdateWithoutLikesDataInput
   upsert: PaletteUpsertWithoutLikesInput
+  delete: Boolean
+  disconnect: Boolean
   connect: PaletteWhereUniqueInput
 }
 
@@ -622,7 +624,7 @@ type Subscription {
 
 type Tag {
   id: ID!
-  text: String!
+  text: String
   palette: Palette
 }
 
@@ -634,7 +636,7 @@ type TagConnection {
 
 input TagCreateInput {
   id: ID
-  text: String!
+  text: String
   palette: PaletteCreateOneWithoutTagsInput
 }
 
@@ -645,7 +647,7 @@ input TagCreateManyWithoutPaletteInput {
 
 input TagCreateWithoutPaletteInput {
   id: ID
-  text: String!
+  text: String
 }
 
 type TagEdge {
@@ -662,7 +664,7 @@ enum TagOrderByInput {
 
 type TagPreviousValues {
   id: ID!
-  text: String!
+  text: String
 }
 
 input TagScalarWhereInput {
@@ -955,10 +957,12 @@ input UserUpdateManyMutationInput {
   role: Role
 }
 
-input UserUpdateOneRequiredWithoutLikesInput {
+input UserUpdateOneWithoutLikesInput {
   create: UserCreateWithoutLikesInput
   update: UserUpdateWithoutLikesDataInput
   upsert: UserUpsertWithoutLikesInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 

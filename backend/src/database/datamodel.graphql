@@ -27,14 +27,14 @@ type Palette {
 
 type Tag {
   id: ID! @id
-  text: String!
+  text: String
   palette: Palette
 }
 
 type Like {
   id: ID! @id
-  palette: Palette!
-  user: User!
+  palette: Palette
+  user: User
 }
 
 enum Role {

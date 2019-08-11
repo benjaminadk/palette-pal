@@ -545,7 +545,7 @@ export interface UserUpdateOneWithoutPalettesInput {
 
 export interface LikeCreateWithoutPaletteInput {
   id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutLikesInput;
+  user?: Maybe<UserCreateOneWithoutLikesInput>;
 }
 
 export interface TagSubscriptionWhereInput {
@@ -560,8 +560,8 @@ export interface TagSubscriptionWhereInput {
 }
 
 export interface LikeUpdateInput {
-  palette?: Maybe<PaletteUpdateOneRequiredWithoutLikesInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutLikesInput>;
+  palette?: Maybe<PaletteUpdateOneWithoutLikesInput>;
+  user?: Maybe<UserUpdateOneWithoutLikesInput>;
 }
 
 export interface LikeSubscriptionWhereInput {
@@ -575,10 +575,12 @@ export interface LikeSubscriptionWhereInput {
   NOT?: Maybe<LikeSubscriptionWhereInput[] | LikeSubscriptionWhereInput>;
 }
 
-export interface PaletteUpdateOneRequiredWithoutLikesInput {
+export interface PaletteUpdateOneWithoutLikesInput {
   create?: Maybe<PaletteCreateWithoutLikesInput>;
   update?: Maybe<PaletteUpdateWithoutLikesDataInput>;
   upsert?: Maybe<PaletteUpsertWithoutLikesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<PaletteWhereUniqueInput>;
 }
 
@@ -676,7 +678,7 @@ export interface TagUpdateWithoutPaletteDataInput {
 
 export interface TagCreateInput {
   id?: Maybe<ID_Input>;
-  text: String;
+  text?: Maybe<String>;
   palette?: Maybe<PaletteCreateOneWithoutTagsInput>;
 }
 
@@ -826,7 +828,7 @@ export interface PaletteSubscriptionWhereInput {
 }
 
 export interface LikeUpdateWithoutUserDataInput {
-  palette?: Maybe<PaletteUpdateOneRequiredWithoutLikesInput>;
+  palette?: Maybe<PaletteUpdateOneWithoutLikesInput>;
 }
 
 export type PaletteWhereUniqueInput = AtLeastOne<{
@@ -896,16 +898,18 @@ export interface PaletteCreateWithoutLikesInput {
   owner?: Maybe<UserCreateOneWithoutPalettesInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutLikesInput {
+export interface UserUpdateOneWithoutLikesInput {
   create?: Maybe<UserCreateWithoutLikesInput>;
   update?: Maybe<UserUpdateWithoutLikesDataInput>;
   upsert?: Maybe<UserUpsertWithoutLikesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface TagCreateWithoutPaletteInput {
   id?: Maybe<ID_Input>;
-  text: String;
+  text?: Maybe<String>;
 }
 
 export interface UserUpdateWithoutLikesDataInput {
@@ -922,7 +926,7 @@ export interface UserUpdateWithoutLikesDataInput {
 
 export interface LikeCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  palette: PaletteCreateOneWithoutLikesInput;
+  palette?: Maybe<PaletteCreateOneWithoutLikesInput>;
 }
 
 export interface PaletteUpdateManyWithoutOwnerInput {
@@ -1086,7 +1090,7 @@ export interface LikeUpsertWithWhereUniqueWithoutPaletteInput {
 }
 
 export interface LikeUpdateWithoutPaletteDataInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutLikesInput>;
+  user?: Maybe<UserUpdateOneWithoutLikesInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -1115,8 +1119,8 @@ export interface UserCreateWithoutPalettesInput {
 
 export interface LikeCreateInput {
   id?: Maybe<ID_Input>;
-  palette: PaletteCreateOneWithoutLikesInput;
-  user: UserCreateOneWithoutLikesInput;
+  palette?: Maybe<PaletteCreateOneWithoutLikesInput>;
+  user?: Maybe<UserCreateOneWithoutLikesInput>;
 }
 
 export interface PaletteUpdateOneWithoutTagsInput {
@@ -1198,7 +1202,7 @@ export interface PaletteConnectionSubscription
 
 export interface Tag {
   id: ID_Output;
-  text: String;
+  text?: String;
 }
 
 export interface TagPromise extends Promise<Tag>, Fragmentable {
@@ -1432,7 +1436,7 @@ export interface LikeEdgeSubscription
 
 export interface TagPreviousValues {
   id: ID_Output;
-  text: String;
+  text?: String;
 }
 
 export interface TagPreviousValuesPromise
