@@ -23,7 +23,7 @@ export const ColorCode = styled.div.attrs(p => ({
   className: 'code',
   style: {
     color: p.textColor,
-    fontSize: p.size === 'small' ? '12px' : '20px'
+    fontSize: ['/palettes'].includes(p.pathname) ? '12px' : '20px'
   }
 }))`
   position: absolute;
@@ -42,10 +42,10 @@ export const ColorCode = styled.div.attrs(p => ({
 export const ColorName = styled.div.attrs(p => ({
   className: 'name',
   style: {
-    visibility: p.size === 'small' ? 'hidden' : 'visible',
+    visibility: ['/palettes'].includes(p.pathname) ? 'hidden' : 'visible',
     display: p.show ? 'block' : 'none',
     color: p.textColor,
-    fontSize: p.size === 'small' ? '13px' : '20px'
+    fontSize: ['/palettes'].includes(p.pathname) ? '12px' : '20px'
   }
 }))`
   position: absolute;
@@ -62,7 +62,7 @@ export const ColorCopied = styled.div.attrs(p => ({
   style: {
     display: p.show ? 'block' : 'none',
     color: p.textColor,
-    fontSize: p.size === 'small' ? '13px' : '20px'
+    fontSize: ['/palettes'].includes(p.pathname) ? '12px' : '20px'
   }
 }))`
   position: absolute;

@@ -16,14 +16,14 @@ export const PalettesGrid = styled.div`
   margin-top: 20px;
 `
 
-const Palettes = props => {
+const Palettes = ({ pathname }) => {
   return (
     <PaletteContext.Consumer>
-      {({ palettes, searchTerm }) => (
+      {({ palettes }) => (
         <PalettesWrapper>
           <PalettesGrid>
-            {palettes.map((palette, i) => (
-              <Palette key={palette.id} palette={palette} />
+            {palettes.map(palette => (
+              <Palette key={palette.id} palette={palette} pathname={pathname} />
             ))}
           </PalettesGrid>
         </PalettesWrapper>

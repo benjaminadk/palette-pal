@@ -4,7 +4,7 @@ import { getContrastText } from '../../../lib/getContrastText'
 import { getColorHeight } from '../../../lib/getColorHeight'
 import { ColorWrapper, ColorCode, ColorCopied, ColorName } from './styles'
 
-const Color = ({ index, size, color, name, totalColors, onClick }) => {
+const Color = ({ index, pathname, color, name, totalColors, onClick }) => {
   const [show, setShow] = useState(false)
 
   function onCopy(e) {
@@ -20,20 +20,20 @@ const Color = ({ index, size, color, name, totalColors, onClick }) => {
 
   return (
     <ColorWrapper
-      size={size}
+      pathname={pathname}
       height={height}
       position={index === 0 ? 'first' : index === totalColors - 1 ? 'last' : 'middle'}
       textColor={textColor}
       background={color}
       onClick={onClick}
     >
-      <ColorCode size={size} textColor={textColor} onClick={e => onCopy(e, color)}>
+      <ColorCode pathname={pathname} textColor={textColor} onClick={e => onCopy(e, color)}>
         {color.toUpperCase()}
       </ColorCode>
-      <ColorName show={!show} size={size} textColor={textColor}>
+      <ColorName show={!show} pathname={pathname} textColor={textColor}>
         {name}
       </ColorName>
-      <ColorCopied show={show} size={size} textColor={textColor}>
+      <ColorCopied show={show} pathname={pathname} textColor={textColor}>
         COPIED
       </ColorCopied>
     </ColorWrapper>

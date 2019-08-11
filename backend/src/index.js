@@ -17,12 +17,14 @@ const { redisSessionPrefix } = require('./constants')
 const server = new ApolloServer({
   resolvers,
   typeDefs: importSchema('./src/schema.graphql'),
-  context: ({ req }) => ({
-    req,
-    prisma,
-    redis,
-    session: req.session
-  })
+  context: ({ req }) => {
+    return {
+      req,
+      prisma,
+      redis,
+      session: req.session
+    }
+  }
 })
 
 const cors = {

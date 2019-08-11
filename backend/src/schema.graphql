@@ -17,6 +17,7 @@ type Mutation {
   signout: BasicPayload
   sendForgotPasswordEmail(email: String!): BasicPayload
   forgotPasswordChange(newPassword: String!, key: String!): BasicPayload
+  likePalette(paletteId: ID!): LikePayload
 }
 
 interface Payload {
@@ -33,4 +34,10 @@ type UserPayload implements Payload {
   success: Boolean!
   message: String!
   user: User
+}
+
+type LikePayload implements Payload {
+  success: Boolean!
+  message: String!
+  like: Like
 }
