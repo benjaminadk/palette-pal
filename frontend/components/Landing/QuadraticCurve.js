@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const Canvas = styled.canvas`
   position: absolute;
   bottom: 0;
-  z-index: 5;
+  z-index: 2;
 `
 
 function generatePoints(nbOfPoints, w, h) {

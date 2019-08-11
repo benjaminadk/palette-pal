@@ -1,11 +1,13 @@
+import { useState } from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import styled, { ThemeProvider } from 'styled-components'
-import { ApolloConsumer, withApollo } from 'react-apollo'
+import { theme } from '../config'
 import { SEARCH_PALETTES_QUERY, perPage } from '../apollo/query/searchPalettes'
-import User from './User'
+import { CURRENT_USER_QUERY } from '../apollo/query/currentUser'
+
 import Header from './Header'
 import Register from './Register'
 import Confirm from './Confirm'
-import { theme } from '../config'
 
 export const UserContext = React.createContext({
   user: null,
@@ -24,77 +26,121 @@ export const Main = styled.main`
   padding-top: ${p => (p.pathname === '/' ? '0px' : p.theme.headerHeight + 'px')};
 `
 
-class Layout extends React.Component {
-  state = {
-    showRegister: false,
-    showConfirm: false,
-    palettes: [],
-    searchTerm: '',
-    first: perPage,
-    skip: 0,
-    orderBy: 'createdAt_DESC',
-    ownerId: '',
-    hasNextPage: true
-  }
+// class Layout1 extends React.Component {
+//   state = {
+//     showRegister: false,
+//     showConfirm: false,
+//     palettes: [],
+//     searchTerm: '',
+//     first: perPage,
+//     skip: 0,
+//     orderBy: 'createdAt_DESC',
+//     ownerId: '',
+//     hasNextPage: true
+//   }
 
-  componentDidMount() {
-    this.fetchPalettes()
-  }
+//   componentDidMount() {
+//     // this.fetchPalettes()
+//   }
 
-  toggleShowRegister = showRegister => this.setState({ showRegister })
+//   toggleShowRegister = showRegister => this.setState({ showRegister })
 
-  toggleShowConfirm = showConfirm => this.setState({ showConfirm })
+//   toggleShowConfirm = showConfirm => this.setState({ showConfirm })
 
-  fetchPalettes = async () => {
-    const { searchTerm, first, skip, orderBy, ownerId } = this.state
-    const res = await this.props.client.query({
-      query: SEARCH_PALETTES_QUERY,
-      variables: {
-        searchTerm,
-        first,
-        skip,
-        orderBy,
-        ownerId
-      }
-    })
-    const { hasNextPage } = res.data.palettesConnection.pageInfo
-    this.setState({
-      hasNextPage,
-      palettes: [...this.state.palettes, ...res.data.palettes]
-    })
-  }
+//   // fetchPalettes = async () => {
+//   //   const { searchTerm, first, skip, orderBy, ownerId } = this.state
+//   //   const res = await this.props.client.query({
+//   //     query: SEARCH_PALETTES_QUERY,
+//   //     variables: {
+//   //       searchTerm,
+//   //       first,
+//   //       skip,
+//   //       orderBy,
+//   //       ownerId
+//   //     }
+//   //   })
+//   //   const { hasNextPage } = res.data.palettesConnection.pageInfo
+//   //   this.setState({
+//   //     hasNextPage,
+//   //     palettes: [...this.state.palettes, ...res.data.palettes]
+//   //   })
+//   // }
 
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <User>
-          {({ data, loading, error }) => {
-            if (loading) return <div>loading...</div>
-            const user = data ? data.currentUser : null
+//   // refetchPalettes = async () => {
+//   //   const { searchTerm, skip, orderBy, ownerId } = this.state
+//   //   const res = await this.props.client.query({
+//   //     query: SEARCH_PALETTES_QUERY,
+//   //     variables: {
+//   //       term: searchTerm,
+//   //       first: perPage + skip,
+//   //       skip: 0,
+//   //       orderBy,
+//   //       ownerId
+//   //     },
+//   //     fetchPolicy: 'network-only'
+//   //   })
 
-            return (
-              <UserContext.Provider value={{ user, toggleShowRegister: this.toggleShowRegister }}>
-                <PaletteContext.Provider
-                  value={{ palettes: this.state.palettes, searchTerm: this.state.searchTerm }}
-                >
-                  <LayoutWrapper>
-                    <Header pathname={this.props.pathname} />
-                    <Main pathname={this.props.pathname}>{this.props.children}</Main>
-                    <Register
-                      show={this.state.showRegister}
-                      toggleShowRegister={this.toggleShowRegister}
-                      toggleShowConfirm={this.toggleShowConfirm}
-                    />
-                    <Confirm show={this.state.showConfirm} />
-                  </LayoutWrapper>
-                </PaletteContext.Provider>
-              </UserContext.Provider>
-            )
-          }}
-        </User>
-      </ThemeProvider>
-    )
-  }
+//   //   this.setState({ palettes: res.data.palettes })
+//   // }
+
+//   render() {
+//     return (
+//       <ThemeProvider theme={theme}>
+//         <User>
+//           {({ data, loading, error }) => {
+//             if (loading) return <div>loading...</div>
+//             const user = data ? data.currentUser : null
+
+//             return (
+//               <UserContext.Provider value={{ user, toggleShowRegister: this.toggleShowRegister }}>
+//                 <PaletteContext.Provider
+//                   value={{ palettes: this.state.palettes, searchTerm: this.state.searchTerm }}
+//                 >
+//                   <LayoutWrapper>
+//                     <Header pathname={this.props.pathname} />
+//                     <Main pathname={this.props.pathname}>{this.props.children}</Main>
+//                     <Register
+//                       show={this.state.showRegister}
+//                       toggleShowRegister={this.toggleShowRegister}
+//                       toggleShowConfirm={this.toggleShowConfirm}
+//                     />
+//                     <Confirm show={this.state.showConfirm} />
+//                   </LayoutWrapper>
+//                 </PaletteContext.Provider>
+//               </UserContext.Provider>
+//             )
+//           }}
+//         </User>
+//       </ThemeProvider>
+//     )
+//   }
+// }
+
+const Layout = ({ pathname, children }) => {
+  const { data, loading, error } = useQuery(CURRENT_USER_QUERY)
+
+  const [showRegister, setShowRegister] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+
+  if (loading) return null
+  const user = data.currentUser
+
+  return (
+    <ThemeProvider theme={theme}>
+      <UserContext.Provider value={{ user }}>
+        <LayoutWrapper>
+          <Header pathname={pathname} user={user} setShowRegister={setShowRegister} />
+          <Main pathname={pathname}>{children}</Main>
+          <Register
+            show={showRegister}
+            setShowRegister={setShowRegister}
+            setShowConfirm={setShowConfirm}
+          />
+          <Confirm show={showConfirm} />
+        </LayoutWrapper>
+      </UserContext.Provider>
+    </ThemeProvider>
+  )
 }
 
-export default withApollo(Layout)
+export default Layout

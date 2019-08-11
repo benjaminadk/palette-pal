@@ -27,6 +27,7 @@ module.exports = async (_, args, { req, session, prisma, redis }, info) => {
 
   // add userId to session
   session.userId = user.id
+
   if (req.sessionID) {
     await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID)
   }

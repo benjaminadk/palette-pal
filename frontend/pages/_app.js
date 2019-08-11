@@ -1,9 +1,9 @@
 import App, { Container } from 'next/app'
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider } from '@apollo/react-hooks'
 import { DefaultSeo } from 'next-seo'
 import GlobalHead from '../components/GlobalHead'
 import GlobalStyle from '../components/GlobalStyle'
-import withApolloClient from '../apollo/withApolloClient'
+import withApolloClient from '../apollo/withApollo'
 import SEO from '../next-seo.config'
 import Layout from '../components/Layout'
 
@@ -18,13 +18,14 @@ class MyApp extends App {
     return { pageProps }
   }
   render() {
-    const { Component, apollo, pageProps } = this.props
+    const { Component, apolloClient, pageProps } = this.props
+
     return (
       <Container>
         <GlobalHead />
         <DefaultSeo {...SEO} />
         <GlobalStyle />
-        <ApolloProvider client={apollo}>
+        <ApolloProvider client={apolloClient}>
           <Layout {...pageProps}>
             <Component {...pageProps} />
           </Layout>

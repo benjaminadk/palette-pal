@@ -7,7 +7,7 @@ export const Backdrop = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 3;
   background: ${p => p.theme.primary}BB;
 `
 
@@ -16,7 +16,7 @@ export const Modal = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 2;
+  z-index: 4;
   transform: translate(-50%, -50%);
   background: ${p => p.theme.white};
   border-radius: 2px;
