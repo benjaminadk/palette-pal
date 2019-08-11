@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-// import { Mutation } from 'react-apollo'
 import { useMutation } from '@apollo/react-hooks'
+import { PaletteContext } from '../../Layout'
 import { LIKE_PALETTE_MUTATION } from '../../../apollo/mutation/likePalette'
 import Svg from '../../Svg'
 import { LikesWrapper } from './styles'
 
 const Likes = ({ pathname, user, id, likes, totalLikes }) => {
+  const [likePalette] = useMutation(LIKE_PALETTE_MUTATION)
+
   const [isLiked, setIsLiked] = useState(false)
 
   useEffect(() => {
@@ -13,26 +15,30 @@ const Likes = ({ pathname, user, id, likes, totalLikes }) => {
     setIsLiked(!!exists)
   }, [likes])
 
-  async function onClick(likePalette) {
+  async function onClick(refetchPalettes) {
     if (pathname !== '/palettes') return
     if (!user) return
 
     await likePalette({
       variables: { paletteId: id }
     })
-    // await refetchPalettes()
+    await refetchPalettes()
   }
 
   return (
-    // <Mutation mutation={LIKE_PALETTE_MUTATION}>
-    //   {(likePalette, { loading, error }) => (
-    <LikesWrapper pathname={pathname} isLiked={isLiked} onClick={() => onClick()}>
-      <Svg name='star' fill={isLiked ? 'gold' : '#B0B0B0'} />
-      <div className='total'>{totalLikes}</div>
-      <div className='direction'>{isLiked ? '\u2bc6' : '\u2bc5'}</div>
-    </LikesWrapper>
-    //   )}
-    // </Mutation>
+    <PaletteContext.Consumer>
+      {({ refetchPalettes }) => (
+        <LikesWrapper
+          pathname={pathname}
+          isLiked={isLiked}
+          onClick={() => onClick(refetchPalettes)}
+        >
+          <Svg name='star' fill={isLiked ? 'gold' : '#B0B0B0'} />
+          <div className='total'>{totalLikes}</div>
+          <div className='direction'>{isLiked ? '\u2bc6' : '\u2bc5'}</div>
+        </LikesWrapper>
+      )}
+    </PaletteContext.Consumer>
   )
 }
 

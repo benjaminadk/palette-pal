@@ -1,143 +1,127 @@
-import { useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import { useState, useEffect, useRef } from 'react'
+import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../config'
 import { SEARCH_PALETTES_QUERY, perPage } from '../apollo/query/searchPalettes'
 import { CURRENT_USER_QUERY } from '../apollo/query/currentUser'
-
 import Header from './Header'
 import Register from './Register'
 import Confirm from './Confirm'
 
 export const UserContext = React.createContext({
-  user: null,
-  toggleShowRegister: () => {}
+  user: null
 })
 
 export const PaletteContext = React.createContext({
   palettes: [],
-  searchTerm: ''
+  searchTerm: '',
+  setSearchTerm: () => {},
+  fetchPalettes: () => {},
+  refetchPalettes: () => {},
+  fetchMorePalettes: () => {}
 })
 
-export const LayoutWrapper = styled.div``
+function usePrevious(value) {
+  const ref = useRef()
+  useEffect(() => {
+    ref.current = value
+  })
+  return ref.current
+}
+
+export const LayoutWrapper = styled.div`
+  height: 100vh;
+  overflow: hidden;
+`
 
 export const Main = styled.main`
   background: ${p => (p.pathname === '/' ? p.theme.white : p.theme.grey[2])};
   padding-top: ${p => (p.pathname === '/' ? '0px' : p.theme.headerHeight + 'px')};
 `
 
-// class Layout1 extends React.Component {
-//   state = {
-//     showRegister: false,
-//     showConfirm: false,
-//     palettes: [],
-//     searchTerm: '',
-//     first: perPage,
-//     skip: 0,
-//     orderBy: 'createdAt_DESC',
-//     ownerId: '',
-//     hasNextPage: true
-//   }
-
-//   componentDidMount() {
-//     // this.fetchPalettes()
-//   }
-
-//   toggleShowRegister = showRegister => this.setState({ showRegister })
-
-//   toggleShowConfirm = showConfirm => this.setState({ showConfirm })
-
-//   // fetchPalettes = async () => {
-//   //   const { searchTerm, first, skip, orderBy, ownerId } = this.state
-//   //   const res = await this.props.client.query({
-//   //     query: SEARCH_PALETTES_QUERY,
-//   //     variables: {
-//   //       searchTerm,
-//   //       first,
-//   //       skip,
-//   //       orderBy,
-//   //       ownerId
-//   //     }
-//   //   })
-//   //   const { hasNextPage } = res.data.palettesConnection.pageInfo
-//   //   this.setState({
-//   //     hasNextPage,
-//   //     palettes: [...this.state.palettes, ...res.data.palettes]
-//   //   })
-//   // }
-
-//   // refetchPalettes = async () => {
-//   //   const { searchTerm, skip, orderBy, ownerId } = this.state
-//   //   const res = await this.props.client.query({
-//   //     query: SEARCH_PALETTES_QUERY,
-//   //     variables: {
-//   //       term: searchTerm,
-//   //       first: perPage + skip,
-//   //       skip: 0,
-//   //       orderBy,
-//   //       ownerId
-//   //     },
-//   //     fetchPolicy: 'network-only'
-//   //   })
-
-//   //   this.setState({ palettes: res.data.palettes })
-//   // }
-
-//   render() {
-//     return (
-//       <ThemeProvider theme={theme}>
-//         <User>
-//           {({ data, loading, error }) => {
-//             if (loading) return <div>loading...</div>
-//             const user = data ? data.currentUser : null
-
-//             return (
-//               <UserContext.Provider value={{ user, toggleShowRegister: this.toggleShowRegister }}>
-//                 <PaletteContext.Provider
-//                   value={{ palettes: this.state.palettes, searchTerm: this.state.searchTerm }}
-//                 >
-//                   <LayoutWrapper>
-//                     <Header pathname={this.props.pathname} />
-//                     <Main pathname={this.props.pathname}>{this.props.children}</Main>
-//                     <Register
-//                       show={this.state.showRegister}
-//                       toggleShowRegister={this.toggleShowRegister}
-//                       toggleShowConfirm={this.toggleShowConfirm}
-//                     />
-//                     <Confirm show={this.state.showConfirm} />
-//                   </LayoutWrapper>
-//                 </PaletteContext.Provider>
-//               </UserContext.Provider>
-//             )
-//           }}
-//         </User>
-//       </ThemeProvider>
-//     )
-//   }
-// }
-
 const Layout = ({ pathname, children }) => {
-  const { data, loading, error } = useQuery(CURRENT_USER_QUERY)
-
+  const client = useApolloClient()
+  const { data, loading: userLoading, error } = useQuery(CURRENT_USER_QUERY)
+  const [loading, setLoading] = useState(false)
+  const [palettes, setPalettes] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [first, setFirst] = useState(() => perPage)
+  const [skip, setSkip] = useState(0)
+  const [orderBy, setOrderBy] = useState('createdAt_DESC')
+  const [ownerId, setOwnerId] = useState('')
+  const [hasNextPage, setHasNextPage] = useState(true)
   const [showRegister, setShowRegister] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
 
-  if (loading) return null
+  const prevSkip = usePrevious(skip)
+
+  useEffect(() => {
+    fetchPalettes()
+  }, [])
+
+  useEffect(() => {
+    if (skip > prevSkip && hasNextPage) {
+      fetchPalettes(true)
+    }
+  }, [skip])
+
+  async function fetchPalettes(fetchMore = false) {
+    await setLoading(true)
+    const res = await client.query({
+      query: SEARCH_PALETTES_QUERY,
+      variables: { searchTerm, first, skip, orderBy, ownerId }
+    })
+
+    setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
+    setPalettes(curr => (fetchMore ? [...curr, ...res.data.palettes] : res.data.palettes))
+    setLoading(false)
+  }
+
+  async function refetchPalettes() {
+    await setLoading(true)
+    const res = await client.query({
+      query: SEARCH_PALETTES_QUERY,
+      variables: { searchTerm, first: perPage + skip, skip: 0, orderBy, ownerId },
+      fetchPolicy: 'network-only'
+    })
+
+    setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
+    setPalettes(res.data.palettes)
+    setLoading(false)
+  }
+
+  function fetchMorePalettes() {
+    setSkip(skip + perPage)
+  }
+
+  if (userLoading) return null
   const user = data.currentUser
 
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={{ user }}>
-        <LayoutWrapper>
-          <Header pathname={pathname} user={user} setShowRegister={setShowRegister} />
-          <Main pathname={pathname}>{children}</Main>
-          <Register
-            show={showRegister}
-            setShowRegister={setShowRegister}
-            setShowConfirm={setShowConfirm}
-          />
-          <Confirm show={showConfirm} />
-        </LayoutWrapper>
+        <PaletteContext.Provider
+          value={{
+            loading,
+            palettes,
+            searchTerm,
+            setSearchTerm,
+            fetchPalettes,
+            refetchPalettes,
+            fetchMorePalettes
+          }}
+        >
+          <LayoutWrapper>
+            <Header pathname={pathname} user={user} setShowRegister={setShowRegister} />
+            <Main pathname={pathname}>{children}</Main>
+            <Register
+              show={showRegister}
+              setShowRegister={setShowRegister}
+              setShowConfirm={setShowConfirm}
+            />
+            <Confirm show={showConfirm} />
+          </LayoutWrapper>
+        </PaletteContext.Provider>
       </UserContext.Provider>
     </ThemeProvider>
   )
