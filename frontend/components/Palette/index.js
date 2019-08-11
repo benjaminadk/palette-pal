@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { formatDistance } from '../../lib/dateHelpers'
 import Color from './Color'
 
 export const PaletteWrapper = styled.div`
@@ -30,8 +31,33 @@ export const PaletteColors = styled.div`
   flex-direction: column;
 `
 
+export const PaletteBottom = styled.div`
+  justify-self: center;
+  width: 90%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+`
+
+export const PaletteAvatar = styled.img`
+  justify-self: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+`
+
+export const PaletteDate = styled.div`
+  justify-self: flex-end;
+  font-family: ${p => p.theme.fontBold};
+  font-size: 11px;
+  color: ${p => p.theme.grey[5]};
+  padding-right: 10px;
+`
+
 const Palette = ({ palette }) => {
-  const { title, colors, names } = palette
+  const { title, colors, names, owner, createdAt } = palette
 
   const allColors = colors.filter(color => color)
 
@@ -50,7 +76,11 @@ const Palette = ({ palette }) => {
           />
         ))}
       </PaletteColors>
-      <div>bottom</div>
+      <PaletteBottom>
+        <div>likes</div>
+        <PaletteAvatar src={owner.image} />
+        <PaletteDate>{formatDistance(createdAt)}</PaletteDate>
+      </PaletteBottom>
     </PaletteWrapper>
   )
 }
