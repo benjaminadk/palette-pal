@@ -82,8 +82,8 @@ const createPaletteData = () => {
   let id = createId()
   let createdAt = createDatePast()
   let title = names[0]
-  let likes = createLikesTotal(1000)
-  return { id, createdAt, title, colors, names, tags, likes }
+  let totalLikes = createLikesTotal(1000)
+  return { id, createdAt, title, colors, names, tags, totalLikes }
 }
 
 const createPalettesData = n => Array.from({ length: n }, () => createPaletteData())

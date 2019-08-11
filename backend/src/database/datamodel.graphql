@@ -10,6 +10,7 @@ type User {
   forgotPasswordLock: Boolean! @default(value: false)
   role: Role! @default(value: USER)
   palettes: [Palette]
+  likes: [Like]
 }
 
 type Palette {
@@ -18,8 +19,9 @@ type Palette {
   title: String!
   colors: [String!]! @scalarList(strategy: RELATION)
   names: [String!]! @scalarList(strategy: RELATION)
+  totalLikes: Int @default(value: 0)
+  likes: [Like]
   tags: [Tag]
-  likes: Int @default(value: 0)
   owner: User
 }
 
@@ -27,6 +29,12 @@ type Tag {
   id: ID! @id
   text: String!
   palette: Palette
+}
+
+type Like {
+  id: ID! @id
+  palette: Palette!
+  user: User!
 }
 
 enum Role {

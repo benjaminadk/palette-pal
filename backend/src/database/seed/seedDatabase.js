@@ -17,7 +17,7 @@ module.exports = async () => {
     id: palette.id,
     createdAt: palette.createdAt,
     title: palette.title,
-    likes: palette.likes
+    totalLikes: palette.totalLikes
   }))
 
   // palette color list

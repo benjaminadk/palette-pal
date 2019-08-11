@@ -1,11 +1,17 @@
 module.exports = `
-  fragment PaletteWithTagsAndOwner on Palette {
+  fragment PaletteWithRelations on Palette {
     id
     createdAt
     title
     colors
     names
-    likes
+    totalLikes
+    likes {
+      id
+      user {
+        id
+      }
+    }
     tags {
       id
       text

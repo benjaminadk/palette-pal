@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregatePalette {
+/* GraphQL */ `type AggregateLike {
+  count: Int!
+}
+
+type AggregatePalette {
   count: Int!
 }
 
@@ -21,9 +25,187 @@ type BatchPayload {
 
 scalar DateTime
 
+type Like {
+  id: ID!
+  palette: Palette!
+  user: User!
+}
+
+type LikeConnection {
+  pageInfo: PageInfo!
+  edges: [LikeEdge]!
+  aggregate: AggregateLike!
+}
+
+input LikeCreateInput {
+  id: ID
+  palette: PaletteCreateOneWithoutLikesInput!
+  user: UserCreateOneWithoutLikesInput!
+}
+
+input LikeCreateManyWithoutPaletteInput {
+  create: [LikeCreateWithoutPaletteInput!]
+  connect: [LikeWhereUniqueInput!]
+}
+
+input LikeCreateManyWithoutUserInput {
+  create: [LikeCreateWithoutUserInput!]
+  connect: [LikeWhereUniqueInput!]
+}
+
+input LikeCreateWithoutPaletteInput {
+  id: ID
+  user: UserCreateOneWithoutLikesInput!
+}
+
+input LikeCreateWithoutUserInput {
+  id: ID
+  palette: PaletteCreateOneWithoutLikesInput!
+}
+
+type LikeEdge {
+  node: Like!
+  cursor: String!
+}
+
+enum LikeOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type LikePreviousValues {
+  id: ID!
+}
+
+input LikeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [LikeScalarWhereInput!]
+  OR: [LikeScalarWhereInput!]
+  NOT: [LikeScalarWhereInput!]
+}
+
+type LikeSubscriptionPayload {
+  mutation: MutationType!
+  node: Like
+  updatedFields: [String!]
+  previousValues: LikePreviousValues
+}
+
+input LikeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LikeWhereInput
+  AND: [LikeSubscriptionWhereInput!]
+  OR: [LikeSubscriptionWhereInput!]
+  NOT: [LikeSubscriptionWhereInput!]
+}
+
+input LikeUpdateInput {
+  palette: PaletteUpdateOneRequiredWithoutLikesInput
+  user: UserUpdateOneRequiredWithoutLikesInput
+}
+
+input LikeUpdateManyWithoutPaletteInput {
+  create: [LikeCreateWithoutPaletteInput!]
+  delete: [LikeWhereUniqueInput!]
+  connect: [LikeWhereUniqueInput!]
+  set: [LikeWhereUniqueInput!]
+  disconnect: [LikeWhereUniqueInput!]
+  update: [LikeUpdateWithWhereUniqueWithoutPaletteInput!]
+  upsert: [LikeUpsertWithWhereUniqueWithoutPaletteInput!]
+  deleteMany: [LikeScalarWhereInput!]
+}
+
+input LikeUpdateManyWithoutUserInput {
+  create: [LikeCreateWithoutUserInput!]
+  delete: [LikeWhereUniqueInput!]
+  connect: [LikeWhereUniqueInput!]
+  set: [LikeWhereUniqueInput!]
+  disconnect: [LikeWhereUniqueInput!]
+  update: [LikeUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [LikeUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [LikeScalarWhereInput!]
+}
+
+input LikeUpdateWithoutPaletteDataInput {
+  user: UserUpdateOneRequiredWithoutLikesInput
+}
+
+input LikeUpdateWithoutUserDataInput {
+  palette: PaletteUpdateOneRequiredWithoutLikesInput
+}
+
+input LikeUpdateWithWhereUniqueWithoutPaletteInput {
+  where: LikeWhereUniqueInput!
+  data: LikeUpdateWithoutPaletteDataInput!
+}
+
+input LikeUpdateWithWhereUniqueWithoutUserInput {
+  where: LikeWhereUniqueInput!
+  data: LikeUpdateWithoutUserDataInput!
+}
+
+input LikeUpsertWithWhereUniqueWithoutPaletteInput {
+  where: LikeWhereUniqueInput!
+  update: LikeUpdateWithoutPaletteDataInput!
+  create: LikeCreateWithoutPaletteInput!
+}
+
+input LikeUpsertWithWhereUniqueWithoutUserInput {
+  where: LikeWhereUniqueInput!
+  update: LikeUpdateWithoutUserDataInput!
+  create: LikeCreateWithoutUserInput!
+}
+
+input LikeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  palette: PaletteWhereInput
+  user: UserWhereInput
+  AND: [LikeWhereInput!]
+  OR: [LikeWhereInput!]
+  NOT: [LikeWhereInput!]
+}
+
+input LikeWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createLike(data: LikeCreateInput!): Like!
+  updateLike(data: LikeUpdateInput!, where: LikeWhereUniqueInput!): Like
+  upsertLike(where: LikeWhereUniqueInput!, create: LikeCreateInput!, update: LikeUpdateInput!): Like!
+  deleteLike(where: LikeWhereUniqueInput!): Like
+  deleteManyLikes(where: LikeWhereInput): BatchPayload!
   createPalette(data: PaletteCreateInput!): Palette!
   updatePalette(data: PaletteUpdateInput!, where: PaletteWhereUniqueInput!): Palette
   updateManyPalettes(data: PaletteUpdateManyMutationInput!, where: PaletteWhereInput): BatchPayload!
@@ -67,8 +249,9 @@ type Palette {
   title: String!
   colors: [String!]!
   names: [String!]!
+  totalLikes: Int
+  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  likes: Int
   owner: User
 }
 
@@ -87,13 +270,24 @@ input PaletteCreateInput {
   title: String!
   colors: PaletteCreatecolorsInput
   names: PaletteCreatenamesInput
+  totalLikes: Int
+  likes: LikeCreateManyWithoutPaletteInput
   tags: TagCreateManyWithoutPaletteInput
-  likes: Int
-  owner: UserCreateOneInput
+  owner: UserCreateOneWithoutPalettesInput
+}
+
+input PaletteCreateManyWithoutOwnerInput {
+  create: [PaletteCreateWithoutOwnerInput!]
+  connect: [PaletteWhereUniqueInput!]
 }
 
 input PaletteCreatenamesInput {
   set: [String!]
+}
+
+input PaletteCreateOneWithoutLikesInput {
+  create: PaletteCreateWithoutLikesInput
+  connect: PaletteWhereUniqueInput
 }
 
 input PaletteCreateOneWithoutTagsInput {
@@ -101,13 +295,34 @@ input PaletteCreateOneWithoutTagsInput {
   connect: PaletteWhereUniqueInput
 }
 
+input PaletteCreateWithoutLikesInput {
+  id: ID
+  title: String!
+  colors: PaletteCreatecolorsInput
+  names: PaletteCreatenamesInput
+  totalLikes: Int
+  tags: TagCreateManyWithoutPaletteInput
+  owner: UserCreateOneWithoutPalettesInput
+}
+
+input PaletteCreateWithoutOwnerInput {
+  id: ID
+  title: String!
+  colors: PaletteCreatecolorsInput
+  names: PaletteCreatenamesInput
+  totalLikes: Int
+  likes: LikeCreateManyWithoutPaletteInput
+  tags: TagCreateManyWithoutPaletteInput
+}
+
 input PaletteCreateWithoutTagsInput {
   id: ID
   title: String!
   colors: PaletteCreatecolorsInput
   names: PaletteCreatenamesInput
-  likes: Int
-  owner: UserCreateOneInput
+  totalLikes: Int
+  likes: LikeCreateManyWithoutPaletteInput
+  owner: UserCreateOneWithoutPalettesInput
 }
 
 type PaletteEdge {
@@ -122,8 +337,8 @@ enum PaletteOrderByInput {
   createdAt_DESC
   title_ASC
   title_DESC
-  likes_ASC
-  likes_DESC
+  totalLikes_ASC
+  totalLikes_DESC
 }
 
 type PalettePreviousValues {
@@ -132,7 +347,57 @@ type PalettePreviousValues {
   title: String!
   colors: [String!]!
   names: [String!]!
-  likes: Int
+  totalLikes: Int
+}
+
+input PaletteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  totalLikes: Int
+  totalLikes_not: Int
+  totalLikes_in: [Int!]
+  totalLikes_not_in: [Int!]
+  totalLikes_lt: Int
+  totalLikes_lte: Int
+  totalLikes_gt: Int
+  totalLikes_gte: Int
+  AND: [PaletteScalarWhereInput!]
+  OR: [PaletteScalarWhereInput!]
+  NOT: [PaletteScalarWhereInput!]
 }
 
 type PaletteSubscriptionPayload {
@@ -161,20 +426,52 @@ input PaletteUpdateInput {
   title: String
   colors: PaletteUpdatecolorsInput
   names: PaletteUpdatenamesInput
+  totalLikes: Int
+  likes: LikeUpdateManyWithoutPaletteInput
   tags: TagUpdateManyWithoutPaletteInput
-  likes: Int
-  owner: UserUpdateOneInput
+  owner: UserUpdateOneWithoutPalettesInput
+}
+
+input PaletteUpdateManyDataInput {
+  title: String
+  colors: PaletteUpdatecolorsInput
+  names: PaletteUpdatenamesInput
+  totalLikes: Int
 }
 
 input PaletteUpdateManyMutationInput {
   title: String
   colors: PaletteUpdatecolorsInput
   names: PaletteUpdatenamesInput
-  likes: Int
+  totalLikes: Int
+}
+
+input PaletteUpdateManyWithoutOwnerInput {
+  create: [PaletteCreateWithoutOwnerInput!]
+  delete: [PaletteWhereUniqueInput!]
+  connect: [PaletteWhereUniqueInput!]
+  set: [PaletteWhereUniqueInput!]
+  disconnect: [PaletteWhereUniqueInput!]
+  update: [PaletteUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [PaletteUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [PaletteScalarWhereInput!]
+  updateMany: [PaletteUpdateManyWithWhereNestedInput!]
+}
+
+input PaletteUpdateManyWithWhereNestedInput {
+  where: PaletteScalarWhereInput!
+  data: PaletteUpdateManyDataInput!
 }
 
 input PaletteUpdatenamesInput {
   set: [String!]
+}
+
+input PaletteUpdateOneRequiredWithoutLikesInput {
+  create: PaletteCreateWithoutLikesInput
+  update: PaletteUpdateWithoutLikesDataInput
+  upsert: PaletteUpsertWithoutLikesInput
+  connect: PaletteWhereUniqueInput
 }
 
 input PaletteUpdateOneWithoutTagsInput {
@@ -186,17 +483,52 @@ input PaletteUpdateOneWithoutTagsInput {
   connect: PaletteWhereUniqueInput
 }
 
+input PaletteUpdateWithoutLikesDataInput {
+  title: String
+  colors: PaletteUpdatecolorsInput
+  names: PaletteUpdatenamesInput
+  totalLikes: Int
+  tags: TagUpdateManyWithoutPaletteInput
+  owner: UserUpdateOneWithoutPalettesInput
+}
+
+input PaletteUpdateWithoutOwnerDataInput {
+  title: String
+  colors: PaletteUpdatecolorsInput
+  names: PaletteUpdatenamesInput
+  totalLikes: Int
+  likes: LikeUpdateManyWithoutPaletteInput
+  tags: TagUpdateManyWithoutPaletteInput
+}
+
 input PaletteUpdateWithoutTagsDataInput {
   title: String
   colors: PaletteUpdatecolorsInput
   names: PaletteUpdatenamesInput
-  likes: Int
-  owner: UserUpdateOneInput
+  totalLikes: Int
+  likes: LikeUpdateManyWithoutPaletteInput
+  owner: UserUpdateOneWithoutPalettesInput
+}
+
+input PaletteUpdateWithWhereUniqueWithoutOwnerInput {
+  where: PaletteWhereUniqueInput!
+  data: PaletteUpdateWithoutOwnerDataInput!
+}
+
+input PaletteUpsertWithoutLikesInput {
+  update: PaletteUpdateWithoutLikesDataInput!
+  create: PaletteCreateWithoutLikesInput!
 }
 
 input PaletteUpsertWithoutTagsInput {
   update: PaletteUpdateWithoutTagsDataInput!
   create: PaletteCreateWithoutTagsInput!
+}
+
+input PaletteUpsertWithWhereUniqueWithoutOwnerInput {
+  where: PaletteWhereUniqueInput!
+  update: PaletteUpdateWithoutOwnerDataInput!
+  create: PaletteCreateWithoutOwnerInput!
 }
 
 input PaletteWhereInput {
@@ -236,17 +568,20 @@ input PaletteWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  totalLikes: Int
+  totalLikes_not: Int
+  totalLikes_in: [Int!]
+  totalLikes_not_in: [Int!]
+  totalLikes_lt: Int
+  totalLikes_lte: Int
+  totalLikes_gt: Int
+  totalLikes_gte: Int
+  likes_every: LikeWhereInput
+  likes_some: LikeWhereInput
+  likes_none: LikeWhereInput
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
-  likes: Int
-  likes_not: Int
-  likes_in: [Int!]
-  likes_not_in: [Int!]
-  likes_lt: Int
-  likes_lte: Int
-  likes_gt: Int
-  likes_gte: Int
   owner: UserWhereInput
   AND: [PaletteWhereInput!]
   OR: [PaletteWhereInput!]
@@ -258,6 +593,9 @@ input PaletteWhereUniqueInput {
 }
 
 type Query {
+  like(where: LikeWhereUniqueInput!): Like
+  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like]!
+  likesConnection(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeConnection!
   palette(where: PaletteWhereUniqueInput!): Palette
   palettes(where: PaletteWhereInput, orderBy: PaletteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Palette]!
   palettesConnection(where: PaletteWhereInput, orderBy: PaletteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PaletteConnection!
@@ -276,6 +614,7 @@ enum Role {
 }
 
 type Subscription {
+  like(where: LikeSubscriptionWhereInput): LikeSubscriptionPayload
   palette(where: PaletteSubscriptionWhereInput): PaletteSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -473,6 +812,8 @@ type User {
   confirmed: Boolean!
   forgotPasswordLock: Boolean!
   role: Role!
+  palettes(where: PaletteWhereInput, orderBy: PaletteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Palette!]
+  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
 }
 
 type UserConnection {
@@ -491,11 +832,44 @@ input UserCreateInput {
   confirmed: Boolean
   forgotPasswordLock: Boolean
   role: Role
+  palettes: PaletteCreateManyWithoutOwnerInput
+  likes: LikeCreateManyWithoutUserInput
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutLikesInput {
+  create: UserCreateWithoutLikesInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutPalettesInput {
+  create: UserCreateWithoutPalettesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutLikesInput {
+  id: ID
+  twitterId: ID
+  name: String!
+  email: String!
+  password: String!
+  image: String!
+  confirmed: Boolean
+  forgotPasswordLock: Boolean
+  role: Role
+  palettes: PaletteCreateManyWithoutOwnerInput
+}
+
+input UserCreateWithoutPalettesInput {
+  id: ID
+  twitterId: ID
+  name: String!
+  email: String!
+  password: String!
+  image: String!
+  confirmed: Boolean
+  forgotPasswordLock: Boolean
+  role: Role
+  likes: LikeCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -557,17 +931,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  twitterId: ID
-  name: String
-  email: String
-  password: String
-  image: String
-  confirmed: Boolean
-  forgotPasswordLock: Boolean
-  role: Role
-}
-
 input UserUpdateInput {
   twitterId: ID
   name: String
@@ -577,6 +940,8 @@ input UserUpdateInput {
   confirmed: Boolean
   forgotPasswordLock: Boolean
   role: Role
+  palettes: PaletteUpdateManyWithoutOwnerInput
+  likes: LikeUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -590,18 +955,54 @@ input UserUpdateManyMutationInput {
   role: Role
 }
 
-input UserUpdateOneInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+input UserUpdateOneRequiredWithoutLikesInput {
+  create: UserCreateWithoutLikesInput
+  update: UserUpdateWithoutLikesDataInput
+  upsert: UserUpsertWithoutLikesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutPalettesInput {
+  create: UserCreateWithoutPalettesInput
+  update: UserUpdateWithoutPalettesDataInput
+  upsert: UserUpsertWithoutPalettesInput
   delete: Boolean
   disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutLikesDataInput {
+  twitterId: ID
+  name: String
+  email: String
+  password: String
+  image: String
+  confirmed: Boolean
+  forgotPasswordLock: Boolean
+  role: Role
+  palettes: PaletteUpdateManyWithoutOwnerInput
+}
+
+input UserUpdateWithoutPalettesDataInput {
+  twitterId: ID
+  name: String
+  email: String
+  password: String
+  image: String
+  confirmed: Boolean
+  forgotPasswordLock: Boolean
+  role: Role
+  likes: LikeUpdateManyWithoutUserInput
+}
+
+input UserUpsertWithoutLikesInput {
+  update: UserUpdateWithoutLikesDataInput!
+  create: UserCreateWithoutLikesInput!
+}
+
+input UserUpsertWithoutPalettesInput {
+  update: UserUpdateWithoutPalettesDataInput!
+  create: UserCreateWithoutPalettesInput!
 }
 
 input UserWhereInput {
@@ -705,6 +1106,12 @@ input UserWhereInput {
   role_not: Role
   role_in: [Role!]
   role_not_in: [Role!]
+  palettes_every: PaletteWhereInput
+  palettes_some: PaletteWhereInput
+  palettes_none: PaletteWhereInput
+  likes_every: LikeWhereInput
+  likes_some: LikeWhereInput
+  likes_none: LikeWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
