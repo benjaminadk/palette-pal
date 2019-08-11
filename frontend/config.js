@@ -1,7 +1,7 @@
 export const FRONTEND = 'http://localhost:7778'
 export const BACKEND = 'http://localhost:7777/graphql'
 export const theme = {
-  primary: '#3d3d3d',
+  primary: '#3D3D3D',
   secondary: '',
   link: '#3598dc',
   white: '#FFFFFF',

@@ -19,7 +19,7 @@ const Palette = ({ palette, pathname }) => {
     <UserContext.Consumer>
       {({ user }) => (
         <PaletteWrapper>
-          <PaletteTitle>{title}</PaletteTitle>
+          <PaletteTitle>{title.toUpperCase()}</PaletteTitle>
           <PaletteColors>
             {allColors.map((color, i) => (
               <Color

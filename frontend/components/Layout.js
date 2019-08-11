@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import styled, { ThemeProvider } from 'styled-components'
+import debounce from 'lodash.debounce'
 import { theme } from '../config'
 import { SEARCH_PALETTES_QUERY, perPage } from '../apollo/query/searchPalettes'
 import { CURRENT_USER_QUERY } from '../apollo/query/currentUser'
@@ -16,6 +17,7 @@ export const PaletteContext = React.createContext({
   palettes: [],
   searchTerm: '',
   setSearchTerm: () => {},
+  onSearchTermChange: () => {},
   fetchPalettes: () => {},
   refetchPalettes: () => {},
   fetchMorePalettes: () => {}
@@ -38,6 +40,10 @@ export const Main = styled.main`
   background: ${p => (p.pathname === '/' ? p.theme.white : p.theme.grey[2])};
   padding-top: ${p => (p.pathname === '/' ? '0px' : p.theme.headerHeight + 'px')};
 `
+
+const fetchPalettesDebounced = debounce(async fetchPalettes => {
+  fetchPalettes()
+}, 1000)
 
 const Layout = ({ pathname, children }) => {
   const client = useApolloClient()
@@ -64,6 +70,10 @@ const Layout = ({ pathname, children }) => {
       fetchPalettes(true)
     }
   }, [skip])
+
+  useEffect(() => {
+    fetchPalettes()
+  }, [orderBy])
 
   async function fetchPalettes(fetchMore = false) {
     await setLoading(true)
@@ -94,6 +104,11 @@ const Layout = ({ pathname, children }) => {
     setSkip(skip + perPage)
   }
 
+  async function onSearchTermChange(e) {
+    setSearchTerm(e.target.value)
+    fetchPalettesDebounced(fetchPalettes)
+  }
+
   if (userLoading) return null
   const user = data.currentUser
 
@@ -106,6 +121,9 @@ const Layout = ({ pathname, children }) => {
             palettes,
             searchTerm,
             setSearchTerm,
+            onSearchTermChange,
+            orderBy,
+            setOrderBy,
             fetchPalettes,
             refetchPalettes,
             fetchMorePalettes
