@@ -4,7 +4,7 @@ import { BACKEND } from '../../config'
 
 let apolloClient = null
 
-function create(initialState) {
+function create(initialState, headers) {
   const isBrowser = typeof window !== 'undefined'
   return new ApolloClient({
     connectToDevTools: isBrowser,
@@ -12,22 +12,23 @@ function create(initialState) {
     link: new HttpLink({
       uri: BACKEND,
       credentials: 'include',
-      fetch: !isBrowser && fetch
+      fetch: !isBrowser && fetch,
+      headers: headers || {}
     }),
     cache: new InMemoryCache().restore(initialState || {})
   })
 }
 
-export default function initApollo(initialState) {
+export default function initApollo(initialState, headers) {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
   if (typeof window === 'undefined') {
-    return create(initialState)
+    return create(initialState, headers)
   }
 
   // Reuse client on the client-side
   if (!apolloClient) {
-    apolloClient = create(initialState)
+    apolloClient = create(initialState, headers)
   }
 
   return apolloClient

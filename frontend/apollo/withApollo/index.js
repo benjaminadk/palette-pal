@@ -10,13 +10,15 @@ export default App => {
       const { AppTree } = ctx
 
       let appProps = {}
+      let headers = ctx.ctx && ctx.ctx.req && ctx.ctx.req.headers
+
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx)
       }
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apollo = initApollo()
+      const apollo = initApollo(null, headers)
       if (typeof window === 'undefined') {
         try {
           // Run all GraphQL queries

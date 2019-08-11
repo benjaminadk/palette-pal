@@ -1,4 +1,4 @@
-module.exports = async (_, args, { prisma, session }, info) => {
+module.exports = async (_, args, { req, prisma, session }, info) => {
   if (!session.userId) {
     return null
   } else {
