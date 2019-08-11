@@ -5,11 +5,11 @@ export const HeaderWrapper = styled.header`
   z-index: 4;
   width: 100%;
   height: ${p => p.theme.headerHeight}px;
-  background: ${p => p.theme.primary}40;
+  background: ${p => (p.pathname === '/' ? `${p.theme.primary}40` : p.theme.primary)};
 `
 
 export const InnerHeader = styled.div`
-  max-width: 1200px;
+  max-width: ${p => p.theme.maxWidth}px;
   height: 100%;
   display: grid;
   grid-template-columns: 100px 1fr 400px;

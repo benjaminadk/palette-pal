@@ -2,10 +2,10 @@ import Router from 'next/router'
 import { UserContext } from '../Layout'
 import { HeaderWrapper, InnerHeader, Logo, Navigation, Avatar } from './styles'
 
-const Header = () => (
+const Header = ({ pathname }) => (
   <UserContext.Consumer>
     {({ user, toggleShowRegister }) => (
-      <HeaderWrapper>
+      <HeaderWrapper pathname={pathname}>
         <InnerHeader>
           <Logo onClick={() => Router.push('/')}>
             <img src='../static/mstile-70x70.png' />

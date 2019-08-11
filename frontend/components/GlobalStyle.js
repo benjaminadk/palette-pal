@@ -16,6 +16,13 @@ export default createGlobalStyle`
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'RobotoMono';
+    src: url('/static/RobotoMono-Medium.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   html {
     box-sizing: border-box;
     font-size: 10px;

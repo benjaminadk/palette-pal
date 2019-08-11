@@ -4,7 +4,7 @@ export const perPage = 12
 
 export const SEARCH_PALETTES_QUERY = gql`
   query SEARCH_PALETTES_QUERY(
-    $term: String, 
+    $searchTerm: String, 
     $first: Int = ${perPage}, 
     $skip: Int = 0, 
     $orderBy: PaletteOrderByInput = createdAt_DESC, 
@@ -17,9 +17,9 @@ export const SEARCH_PALETTES_QUERY = gql`
             { 
               OR:  
                 [ 
-                  { title_contains: $term }, 
-                  { tags_some: { text_contains: $term } },
-                  { owner: { name_contains: $term } } 
+                  { title_contains: $searchTerm }, 
+                  { tags_some: { text_contains: $searchTerm } },
+                  { owner: { name_contains: $searchTerm } } 
                 ]
             }
         ]
@@ -29,17 +29,10 @@ export const SEARCH_PALETTES_QUERY = gql`
       title
       colors
       names
-      totalLikes
+      likes
       tags {
         id
         text
-      }
-      likes {
-        id
-        createdAt
-        user {
-          id
-        }
       }
       owner {
         id
@@ -54,9 +47,9 @@ export const SEARCH_PALETTES_QUERY = gql`
             { 
               OR:  
                 [ 
-                  { title_contains: $term }, 
-                  { tags_some: { text_contains: $term } },
-                  { owner: { name_contains: $term } } 
+                  { title_contains: $searchTerm }, 
+                  { tags_some: { text_contains: $searchTerm } },
+                  { owner: { name_contains: $searchTerm } } 
                 ]
             }
         ]
