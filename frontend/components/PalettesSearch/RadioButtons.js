@@ -25,7 +25,7 @@ const options = [
 const RadioButtons = () => {
   return (
     <AppContext.Consumer>
-      {({ orderBy, setOrderBy }) => (
+      {({ orderBy, onOrderByChange }) => (
         <RadioButtonsWrapper>
           {options.map(option => (
             <Radio key={option.name}>
@@ -33,7 +33,7 @@ const RadioButtons = () => {
                 type='radio'
                 checked={option.value === orderBy}
                 value={option.value}
-                onChange={e => setOrderBy(e.target.value)}
+                onChange={e => onOrderByChange(e.target.value)}
               />
               <label>{option.name}</label>
             </Radio>

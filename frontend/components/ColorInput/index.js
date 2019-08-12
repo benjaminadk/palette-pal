@@ -4,7 +4,7 @@ import { ColorSwatch } from './styles'
 
 const colorBackgrounds = ['#F0F0F0', '#E0E0E0', '#CFCFCF', '#BFBFBF', '#B0B0B0', '#A1A1A1']
 
-const ColorInput = ({ height, index, colors, color, setColors }) => {
+const ColorInput = ({ height, index, available, color, setColors }) => {
   const [show, setShow] = useState(false)
 
   function onChange(c) {
@@ -16,9 +16,7 @@ const ColorInput = ({ height, index, colors, color, setColors }) => {
   }
 
   function onClick() {
-    if (index === 0 || colors[index - 1]) {
-      setShow(true)
-    }
+    available && setShow(true)
   }
 
   return (
@@ -29,9 +27,9 @@ const ColorInput = ({ height, index, colors, color, setColors }) => {
         color={color || colorBackgrounds[index]}
         onClick={onClick}
       />
-      <ColorPicker show={show} onChange={onChange} onClose={() => setShow(false)} />
+      <ColorPicker show={show} onChange={onChange} setShow={setShow} />
     </>
   )
 }
 
-export default ColorInput
+export default React.memo(ColorInput)

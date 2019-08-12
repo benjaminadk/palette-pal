@@ -14,10 +14,10 @@ export const LikesWrapper = styled.div.attrs(p => ({
     background: ${p => p.pathname === '/palettes' && '#f5f5f5'};
   }
   &:hover .total {
-    color: ${p => p.theme.grey[10]};
+    color: ${p => p.pathname === '/palettes' && p.theme.grey[10]};
   }
   &:hover .direction {
-    opacity: 1;
+    opacity: ${p => (p.pathname === '/palettes' ? 1 : 0)};
   }
   svg {
     width: 16px;

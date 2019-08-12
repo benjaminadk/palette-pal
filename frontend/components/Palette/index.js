@@ -1,3 +1,4 @@
+import Router from 'next/router'
 import { AppContext } from '../Layout'
 import { formatDistance } from '../../lib/dateHelpers'
 import Color from './Color'
@@ -20,7 +21,7 @@ const Palette = ({ palette, pathname, onAvatarClick }) => {
       {({ user }) => (
         <PaletteWrapper>
           <PaletteTitle>{title.toUpperCase()}</PaletteTitle>
-          <PaletteColors>
+          <PaletteColors onClick={() => Router.push({ pathname: '/palette', query: { id } })}>
             {allColors.map((color, i) => (
               <Color
                 key={i}

@@ -24,7 +24,7 @@ function computeSquareXY(s, l) {
   return [x, y]
 }
 
-const ColorPicker = ({ show, onChange, onClose }) => {
+const ColorPicker = ({ show, onChange, setShow }) => {
   const modal = useRef(null)
 
   const [firstTouch, setFirstTouch] = useState(false)
@@ -91,11 +91,11 @@ const ColorPicker = ({ show, onChange, onClose }) => {
 
   function onOkayClick() {
     onChange(convertHSLtoRGB([hue, square[0], square[1], 1]).hex)
-    onClose()
+    setShow(false)
   }
 
   return (
-    <Modal modal={modal} show={show} onClose={onClose}>
+    <Modal modal={modal} show={show} setShow={setShow}>
       <ColorPickerWrapper>
         <Main>
           <Square

@@ -6,6 +6,7 @@ export const HeaderWrapper = styled.header`
   width: 100%;
   height: ${p => p.theme.headerHeight}px;
   background: ${p => (p.pathname === '/' ? `${p.theme.primary}40` : p.theme.primary)};
+  user-select: none;
 `
 
 export const InnerHeader = styled.div`

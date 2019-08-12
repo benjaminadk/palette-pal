@@ -4,7 +4,7 @@ export const PaletteWrapper = styled.div`
   width: 300px;
   height: 400px;
   display: grid;
-  grid-template-rows: 10% 75% 15%;
+  grid-template-rows: 12% 73% 15%;
   background: ${p => p.theme.white};
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
 `
@@ -23,7 +23,7 @@ export const PaletteTitle = styled.div`
 
 export const PaletteColors = styled.div`
   justify-self: center;
-  width: 90%;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;

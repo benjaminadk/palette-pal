@@ -49,8 +49,8 @@ const CreatePalette = props => {
               <ColorInput
                 key={i}
                 height={getColorHeight(6, i)}
+                available={i === 0 || colors[i - 1]}
                 index={i}
-                colors={colors}
                 color={color}
                 setColors={setColors}
               />
@@ -64,4 +64,4 @@ const CreatePalette = props => {
   )
 }
 
-export default CreatePalette
+export default React.memo(CreatePalette)

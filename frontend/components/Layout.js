@@ -18,7 +18,7 @@ export const AppContext = React.createContext({
   setShowConfirm: () => {},
   setShowRegister: () => {},
   setSearchTerm: () => {},
-  setOrderBy: () => {},
+  onOrderByChange: () => {},
   onSearchTermChange: () => {},
   onAvatarClick: () => {},
   fetchPalettes: () => {},
@@ -74,10 +74,6 @@ const Layout = ({ pathname, children }) => {
     }
   }, [skip])
 
-  useEffect(() => {
-    fetchPalettes()
-  }, [orderBy])
-
   async function fetchPalettes(fetchMore = false) {
     await setLoading(true)
     const res = await client.query({
@@ -112,6 +108,21 @@ const Layout = ({ pathname, children }) => {
     fetchPalettesDebounced(fetchPalettes)
   }
 
+  async function onOrderByChange(order) {
+    await setOrderBy(order)
+    await setSkip(0)
+    await setFirst(perPage)
+    await setLoading(true)
+    const res = await client.query({
+      query: SEARCH_PALETTES_QUERY,
+      variables: { searchTerm, first: perPage, skip: 0, orderBy: order, ownerId }
+    })
+
+    setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
+    setPalettes(res.data.palettes)
+    setLoading(false)
+  }
+
   async function onAvatarClick(username) {
     await setSearchTerm(username)
     await setLoading(true)
@@ -139,7 +150,7 @@ const Layout = ({ pathname, children }) => {
           setShowRegister,
           setShowConfirm,
           setSearchTerm,
-          setOrderBy,
+          onOrderByChange,
           onSearchTermChange,
           onAvatarClick,
           fetchPalettes,
