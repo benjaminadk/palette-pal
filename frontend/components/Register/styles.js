@@ -8,7 +8,7 @@ export const Backdrop = styled.div`
   left: 0;
   right: 0;
   z-index: 3;
-  background: ${p => p.theme.primary}BB;
+  background: ${p => p.theme.backdrop};
 `
 
 export const Modal = styled.div`

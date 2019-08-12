@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import styled, { ThemeProvider } from 'styled-components'
 import debounce from 'lodash.debounce'
-import { theme } from '../config'
+import { THEME } from '../config'
 import { SEARCH_PALETTES_QUERY, perPage } from '../apollo/query/searchPalettes'
 import { CURRENT_USER_QUERY } from '../apollo/query/currentUser'
 import Header from './Header'
@@ -128,7 +128,7 @@ const Layout = ({ pathname, children }) => {
   const user = data.currentUser
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={THEME}>
       <AppContext.Provider
         value={{
           loading,

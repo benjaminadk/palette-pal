@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import { theme } from '../config'
+import { THEME } from '../config'
 
 export default createGlobalStyle`
   @font-face {
@@ -35,7 +35,7 @@ export default createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-family: ${theme.fontRegular};
+    font-family: ${THEME.fontRegular};
     font-size: 1.5rem;
     line-height: 1.5;
   }
@@ -47,6 +47,6 @@ export default createGlobalStyle`
   hr {
     height: 0;
     border: 0;
-    border-top: 1px solid ${theme.grey[2]};
+    border-top: 1px solid ${THEME.grey[2]};
   }
 `
