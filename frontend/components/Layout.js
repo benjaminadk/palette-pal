@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useQuery, useApolloClient } from '@apollo/react-hooks'
+import Router from 'next/router'
 import styled, { ThemeProvider } from 'styled-components'
 import debounce from 'lodash.debounce'
 import { THEME } from '../config'
@@ -21,6 +22,7 @@ export const AppContext = React.createContext({
   onOrderByChange: () => {},
   onSearchTermChange: () => {},
   onAvatarClick: () => {},
+  onTagClick: () => {},
   fetchPalettes: () => {},
   refetchPalettes: () => {},
   fetchMorePalettes: () => {}
@@ -135,6 +137,19 @@ const Layout = ({ pathname, children }) => {
     setLoading(false)
   }
 
+  async function onTagClick(tag) {
+    await setSearchTerm(tag)
+    await setLoading(true)
+    const res = await client.query({
+      query: SEARCH_PALETTES_QUERY,
+      variables: { searchTerm: tag, first: perPage, skip: 0, orderBy, ownerId }
+    })
+    setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
+    setPalettes(res.data.palettes)
+    setLoading(false)
+    Router.push('/palettes')
+  }
+
   if (userLoading) return null
   const user = data.currentUser
 
@@ -153,6 +168,7 @@ const Layout = ({ pathname, children }) => {
           onOrderByChange,
           onSearchTermChange,
           onAvatarClick,
+          onTagClick,
           fetchPalettes,
           refetchPalettes,
           fetchMorePalettes

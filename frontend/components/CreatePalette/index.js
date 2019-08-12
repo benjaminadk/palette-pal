@@ -56,8 +56,8 @@ const CreatePalette = props => {
               />
             ))}
           </CreateColors>
+          <CreateButton onClick={onCreatePalette}>Create New Palette</CreateButton>
         </CreateForm>
-        <CreateButton onClick={onCreatePalette}>Create New Palette</CreateButton>
       </CreateWrapper>
       <ErrorMessage error={error} />
     </>

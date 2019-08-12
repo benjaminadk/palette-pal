@@ -3,16 +3,15 @@ import styled from 'styled-components'
 export const CreateWrapper = styled.div`
   height: calc(100vh - ${p => p.theme.headerHeight}px);
   display: grid;
-  grid-template-rows: 80% 20%;
   align-items: center;
   justify-items: center;
 `
 
 export const CreateForm = styled.div`
   width: 300px;
-  height: 400px;
+  height: 450px;
   display: grid;
-  grid-template-rows: 15% 85%;
+  grid-template-rows: 15% 70% 15%;
   background: ${p => p.theme.white};
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
 `
@@ -37,8 +36,8 @@ export const CreateColors = styled.div`
 
 export const CreateButton = styled.button`
   justify-self: center;
-  align-self: flex-start;
-  width: 300px;
+  align-self: center;
+  width: 90%;
   background: ${p => p.theme.primary};
   color: ${p => p.theme.white};
   border: 0;
