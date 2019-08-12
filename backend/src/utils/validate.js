@@ -3,9 +3,10 @@ const { UserInputError } = require('apollo-server-express')
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const usernameLength = 3
 const passwordLength = 8
+const paletteTitleLength = 3
+const paletteColorsLength = 4
 
 module.exports = (mode, args) => {
-  const inputErrors = {}
   if (mode === 'signup') {
     if (!args.name) throw new UserInputError('Name field is required')
     if (args.name.length < usernameLength)
@@ -26,5 +27,11 @@ module.exports = (mode, args) => {
     if (!args.newPassword) throw new UserInputError('Password field is required')
     if (args.newPassword.length < passwordLength)
       throw new UserInputError('Password must be at least 8 characters')
+  } else if (mode === 'palette') {
+    if (!args.title) throw new UserInputError('Title field is required')
+    if (args.title.length < paletteTitleLength)
+      throw new UserInputError('Title must be at least 3 characters')
+    if (args.colors.filter(c => c).length < paletteColorsLength)
+      throw new UserInputError('Palette must contain at least 4 colors')
   }
 }

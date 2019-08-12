@@ -24,7 +24,7 @@ function computeSquareXY(s, l) {
   return [x, y]
 }
 
-const ColorPicker = ({ index, show, initialColor, onChange, onClose }) => {
+const ColorPicker = ({ show, onChange, onClose }) => {
   const modal = useRef(null)
 
   const [firstTouch, setFirstTouch] = useState(false)
@@ -67,12 +67,12 @@ const ColorPicker = ({ index, show, initialColor, onChange, onClose }) => {
   }, [hue, square])
 
   useEffect(() => {
-    const [h, s, l, a] = convertHEXtoHSL(initialColor)
+    const [h, s, l, a] = convertHEXtoHSL('#000000')
     setHue(h)
     setHueX(computeHueX(h))
     setSquare([s, l])
     setSquareXY(computeSquareXY(s, l))
-  }, [initialColor])
+  }, [])
 
   function onHueChange(x) {
     setHue(x)

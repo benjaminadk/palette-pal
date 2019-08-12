@@ -14,7 +14,7 @@ module.exports = async (_, args, { session, redis }, info) => {
     // success payload
     return {
       success: true,
-      message: 'User signout success'
+      message: 'User signed out'
     }
   }
 

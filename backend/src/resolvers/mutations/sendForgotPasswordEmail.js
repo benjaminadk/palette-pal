@@ -31,6 +31,6 @@ module.exports = async (_, args, { prisma, redis }, info) => {
   // success
   return {
     success: true,
-    message: 'Forgot password email sent success'
+    message: 'Forgot password email sent'
   }
 }
