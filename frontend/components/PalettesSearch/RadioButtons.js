@@ -9,6 +9,9 @@ export const RadioButtonsWrapper = styled.div`
 export const Radio = styled.div`
   display: flex;
   align-items: center;
+  input {
+    margin-right: 2px;
+  }
   label {
     font-size: 12px;
   }

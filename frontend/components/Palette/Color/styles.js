@@ -9,10 +9,10 @@ export const ColorWrapper = styled.div.attrs(p => ({
   position: relative;
   cursor: pointer;
   user-select: none;
-  border-top-left-radius: ${p => (p.position === 'first' ? '4px' : '0')};
+  /* border-top-left-radius: ${p => (p.position === 'first' ? '4px' : '0')};
   border-top-right-radius: ${p => (p.position === 'first' ? '4px' : '0')};
   border-bottom-left-radius: ${p => (p.position === 'last' ? '4px' : '0')};
-  border-bottom-right-radius: ${p => (p.position === 'last' ? '4px' : '0')};
+  border-bottom-right-radius: ${p => (p.position === 'last' ? '4px' : '0')}; */
   &:hover .code,
   &:hover .name {
     opacity: 1;

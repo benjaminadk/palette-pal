@@ -36,6 +36,7 @@ const AmbientBackground = () => {
   const canvas = useRef(null)
 
   useEffect(() => {
+    let animationId
     let circleProps
     let simplex
     let baseHue
@@ -153,11 +154,12 @@ const AmbientBackground = () => {
       ctx2.fillRect(0, 0, c2.width, c2.height)
       updateCircles()
       render()
-      window.requestAnimationFrame(draw)
+      animationId = window.requestAnimationFrame(draw)
     }
 
     return () => {
       window.removeEventListener('resize', resize)
+      window.cancelAnimationFrame(animationId)
     }
   }, [])
 
