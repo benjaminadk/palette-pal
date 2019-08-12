@@ -1,18 +1,8 @@
-import { useRef, useState } from 'react'
-import { Container } from './styles'
+import { useRef } from 'react'
+import { NumberInputWrapper } from './styles'
 
 export default function NumberInput({ label, value, max, min, fallback, disabled, setter }) {
   const input = useRef(null)
-
-  const [focused, setFocused] = useState(false)
-
-  function onFocus() {
-    if (disabled) {
-      return
-    }
-    setFocused(true)
-    input.current.select()
-  }
 
   function onBlur(e) {
     if (disabled) {
@@ -23,7 +13,6 @@ export default function NumberInput({ label, value, max, min, fallback, disabled
     } else if (e.target.value < min) {
       setter(min)
     }
-    setFocused(false)
   }
 
   function onChange(e) {
@@ -45,7 +34,7 @@ export default function NumberInput({ label, value, max, min, fallback, disabled
   }
 
   return (
-    <Container focused={focused}>
+    <NumberInputWrapper>
       <label>{label}</label>
       <input
         ref={input}
@@ -53,9 +42,8 @@ export default function NumberInput({ label, value, max, min, fallback, disabled
         readOnly={disabled}
         onChange={onChange}
         onBlur={onBlur}
-        onFocus={onFocus}
         autoFocus={false}
       />
-    </Container>
+    </NumberInputWrapper>
   )
 }

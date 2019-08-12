@@ -6,7 +6,7 @@ import Hue from './Hue'
 import Square from './Square'
 import Svg from '../Svg'
 import NumberInput from '../NumberInput'
-import { Container, Main, MiniButton } from './styles'
+import { ColorPickerWrapper, Main, InputsWrapper, BottomWrapper, Swatch, Button } from './styles'
 import { PICKER } from '../../config'
 
 const { squareSize, handleOffsetX, crossOffset } = PICKER
@@ -96,61 +96,58 @@ const ColorPicker = ({ index, show, initialColor, onChange, onClose }) => {
 
   return (
     <Modal modal={modal} show={show} onClose={onClose}>
-      <Container>
+      <ColorPickerWrapper>
         <Main>
-          <div className='square'>
-            <Square
-              hue={hue}
-              squareXY={squareXY}
-              setSquare={setSquare}
-              offsetTop={offsetTop}
-              offsetLeft={offsetLeft}
-              setSquareXY={setSquareXY}
-              setFirstTouch={setFirstTouch}
+          <Square
+            hue={hue}
+            squareXY={squareXY}
+            setSquare={setSquare}
+            offsetTop={offsetTop}
+            offsetLeft={offsetLeft}
+            setSquareXY={setSquareXY}
+            setFirstTouch={setFirstTouch}
+          />
+          <Hue
+            hueX={hueX}
+            offsetLeft={offsetLeft}
+            setHueX={setHueX}
+            setHue={setHue}
+            setFirstTouch={setFirstTouch}
+          />
+          <InputsWrapper>
+            <NumberInput
+              label='H'
+              value={hue}
+              min={0}
+              max={360}
+              fallback={180}
+              setter={onHueChange}
             />
-          </div>
-          <div className='hue'>
-            <Hue
-              hueX={hueX}
-              offsetLeft={offsetLeft}
-              setHueX={setHueX}
-              setHue={setHue}
-              setFirstTouch={setFirstTouch}
+            <NumberInput
+              label='S'
+              value={square[0]}
+              min={0}
+              max={100}
+              fallback={100}
+              setter={onSaturationChange}
             />
-          </div>
-          <div className='controls'>
-            <div className='inputs'>
-              <NumberInput
-                label='H'
-                value={hue}
-                min={0}
-                max={360}
-                fallback={180}
-                setter={onHueChange}
-              />
-              <NumberInput
-                label='S'
-                value={square[0]}
-                min={0}
-                max={100}
-                fallback={100}
-                setter={onSaturationChange}
-              />
-              <NumberInput
-                label='L'
-                value={square[1]}
-                min={0}
-                max={100}
-                fallback={50}
-                setter={onLightnessChange}
-              />
-            </div>
-            <MiniButton onClick={onOkayClick}>
+            <NumberInput
+              label='L'
+              value={square[1]}
+              min={0}
+              max={100}
+              fallback={50}
+              setter={onLightnessChange}
+            />
+          </InputsWrapper>
+          <BottomWrapper>
+            <Swatch color={convertHSLtoRGB([hue, square[0], square[1], 1]).hex} />
+            <Button onClick={onOkayClick}>
               <Svg name='check' />
-            </MiniButton>
-          </div>
+            </Button>
+          </BottomWrapper>
         </Main>
-      </Container>
+      </ColorPickerWrapper>
     </Modal>
   )
 }

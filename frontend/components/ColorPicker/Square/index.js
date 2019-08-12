@@ -34,7 +34,7 @@ const Square = ({
       )
       const y = Math.max(
         crossOffset * -1,
-        Math.min(e.clientY - offsetTop + 132, squareSize - crossOffset)
+        Math.min(e.clientY - offsetTop + 158, squareSize - crossOffset)
       )
 
       return [x, y]

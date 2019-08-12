@@ -36,6 +36,7 @@ export const THEME = {
 }
 
 export const PICKER = {
+  height: 350,
   squareSize: 200,
   barWidth: 20,
   crossSize: 15,
