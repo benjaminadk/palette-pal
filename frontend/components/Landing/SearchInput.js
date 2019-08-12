@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Router from 'next/router'
-import { PaletteContext } from '../Layout'
+import { AppContext } from '../Layout'
 import TextInput from '../TextInput'
 
 export const SearchInputWrapper = styled.form`
@@ -35,7 +35,7 @@ const SearchInput = () => {
   }
 
   return (
-    <PaletteContext.Consumer>
+    <AppContext.Consumer>
       {({ searchTerm, setSearchTerm, fetchPalettes }) => (
         <SearchInputWrapper onSubmit={e => onSubmit(e, fetchPalettes)}>
           <TextInput
@@ -47,7 +47,7 @@ const SearchInput = () => {
           <button type='submit'>Search</button>
         </SearchInputWrapper>
       )}
-    </PaletteContext.Consumer>
+    </AppContext.Consumer>
   )
 }
 

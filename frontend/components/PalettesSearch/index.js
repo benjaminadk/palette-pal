@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { PaletteContext } from '../Layout'
+import { AppContext } from '../Layout'
 import TextInput from '../TextInput'
 import RadioButtons from './RadioButtons'
 
@@ -25,7 +25,7 @@ export const SearchInterface = styled.div`
 
 const PalettesSearch = ({ searchRef }) => {
   return (
-    <PaletteContext.Consumer>
+    <AppContext.Consumer>
       {({ searchTerm, onSearchTermChange }) => (
         <PalettesSearchWrapper ref={searchRef}>
           <SearchInterface>
@@ -39,7 +39,7 @@ const PalettesSearch = ({ searchRef }) => {
           </SearchInterface>
         </PalettesSearchWrapper>
       )}
-    </PaletteContext.Consumer>
+    </AppContext.Consumer>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { PaletteContext } from '../components/Layout'
+import { AppContext } from '../components/Layout'
 import Palette from '../components/Palette'
 import PalettesSearch from '../components/PalettesSearch'
 import styled from 'styled-components'
@@ -60,7 +60,7 @@ const Palettes = ({ pathname }) => {
   }
 
   return (
-    <PaletteContext.Consumer>
+    <AppContext.Consumer>
       {({ loading, palettes, onAvatarClick, fetchMorePalettes }) => (
         <PalettesWrapper onScroll={e => onScroll(e, fetchMorePalettes)}>
           <PalettesSearch searchRef={search} />
@@ -79,7 +79,7 @@ const Palettes = ({ pathname }) => {
           </AutoReturn>
         </PalettesWrapper>
       )}
-    </PaletteContext.Consumer>
+    </AppContext.Consumer>
   )
 }
 

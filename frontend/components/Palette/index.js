@@ -1,4 +1,4 @@
-import { UserContext } from '../Layout'
+import { AppContext } from '../Layout'
 import { formatDistance } from '../../lib/dateHelpers'
 import Color from './Color'
 import Likes from './Likes'
@@ -16,7 +16,7 @@ const Palette = ({ palette, pathname, onAvatarClick }) => {
   const allColors = colors.filter(color => color)
 
   return (
-    <UserContext.Consumer>
+    <AppContext.Consumer>
       {({ user }) => (
         <PaletteWrapper>
           <PaletteTitle>{title.toUpperCase()}</PaletteTitle>
@@ -39,7 +39,7 @@ const Palette = ({ palette, pathname, onAvatarClick }) => {
           </PaletteBottom>
         </PaletteWrapper>
       )}
-    </UserContext.Consumer>
+    </AppContext.Consumer>
   )
 }
 

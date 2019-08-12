@@ -9,14 +9,16 @@ import Header from './Header'
 import Register from './Register'
 import Confirm from './Confirm'
 
-export const UserContext = React.createContext({
-  user: null
-})
-
-export const PaletteContext = React.createContext({
+export const AppContext = React.createContext({
+  loading: true,
+  user: null,
   palettes: [],
   searchTerm: '',
+  orderBy: '',
+  setShowConfirm: () => {},
+  setShowRegister: () => {},
   setSearchTerm: () => {},
+  setOrderBy: () => {},
   onSearchTermChange: () => {},
   onAvatarClick: () => {},
   fetchPalettes: () => {},
@@ -127,34 +129,35 @@ const Layout = ({ pathname, children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={{ user }}>
-        <PaletteContext.Provider
-          value={{
-            loading,
-            palettes,
-            searchTerm,
-            setSearchTerm,
-            onSearchTermChange,
-            orderBy,
-            setOrderBy,
-            onAvatarClick,
-            fetchPalettes,
-            refetchPalettes,
-            fetchMorePalettes
-          }}
-        >
-          <LayoutWrapper>
-            <Header pathname={pathname} user={user} setShowRegister={setShowRegister} />
-            <Main pathname={pathname}>{children}</Main>
-            <Register
-              show={showRegister}
-              setShowRegister={setShowRegister}
-              setShowConfirm={setShowConfirm}
-            />
-            <Confirm show={showConfirm} />
-          </LayoutWrapper>
-        </PaletteContext.Provider>
-      </UserContext.Provider>
+      <AppContext.Provider
+        value={{
+          loading,
+          user,
+          palettes,
+          searchTerm,
+          orderBy,
+          setShowRegister,
+          setShowConfirm,
+          setSearchTerm,
+          setOrderBy,
+          onSearchTermChange,
+          onAvatarClick,
+          fetchPalettes,
+          refetchPalettes,
+          fetchMorePalettes
+        }}
+      >
+        <LayoutWrapper>
+          <Header pathname={pathname} user={user} setShowRegister={setShowRegister} />
+          <Main pathname={pathname}>{children}</Main>
+          <Register
+            show={showRegister}
+            setShowRegister={setShowRegister}
+            setShowConfirm={setShowConfirm}
+          />
+          <Confirm show={showConfirm} />
+        </LayoutWrapper>
+      </AppContext.Provider>
     </ThemeProvider>
   )
 }

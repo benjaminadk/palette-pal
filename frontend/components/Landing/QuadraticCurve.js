@@ -19,18 +19,6 @@ function generatePoints(nbOfPoints, w, h) {
   return pts
 }
 
-function generatePoints2(nbOfPoints, w, h, mods) {
-  const pts = []
-  for (let i = 0; i <= nbOfPoints; i++) {
-    pts.push({
-      x: i * (w / nbOfPoints),
-      y: h * (i % 3 === 0 ? mods[0] : i % 3 === mods[1] ? 0 : mods[2])
-    })
-  }
-
-  return pts
-}
-
 const QuadraticCurve = () => {
   const canvas = useRef(null)
 

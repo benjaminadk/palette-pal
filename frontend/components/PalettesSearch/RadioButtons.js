@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { PaletteContext } from '../Layout'
+import { AppContext } from '../Layout'
 
 export const RadioButtonsWrapper = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const options = [
 
 const RadioButtons = () => {
   return (
-    <PaletteContext.Consumer>
+    <AppContext.Consumer>
       {({ orderBy, setOrderBy }) => (
         <RadioButtonsWrapper>
           {options.map(option => (
@@ -40,7 +40,7 @@ const RadioButtons = () => {
           ))}
         </RadioButtonsWrapper>
       )}
-    </PaletteContext.Consumer>
+    </AppContext.Consumer>
   )
 }
 

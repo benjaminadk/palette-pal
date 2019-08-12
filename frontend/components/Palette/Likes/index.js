@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { PaletteContext } from '../../Layout'
+import { AppContext } from '../../Layout'
 import { LIKE_PALETTE_MUTATION } from '../../../apollo/mutation/likePalette'
 import Svg from '../../Svg'
 import { LikesWrapper } from './styles'
@@ -26,7 +26,7 @@ const Likes = ({ pathname, user, id, likes, totalLikes }) => {
   }
 
   return (
-    <PaletteContext.Consumer>
+    <AppContext.Consumer>
       {({ refetchPalettes }) => (
         <LikesWrapper
           pathname={pathname}
@@ -38,7 +38,7 @@ const Likes = ({ pathname, user, id, likes, totalLikes }) => {
           <div className='direction'>{isLiked ? '\u2bc6' : '\u2bc5'}</div>
         </LikesWrapper>
       )}
-    </PaletteContext.Consumer>
+    </AppContext.Consumer>
   )
 }
 
