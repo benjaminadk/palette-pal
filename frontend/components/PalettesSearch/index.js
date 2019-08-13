@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { AppContext } from '../Layout'
 import TextInput from '../TextInput'
 import RadioButtons from './RadioButtons'
+import Media from '../Media'
 
 export const PalettesSearchWrapper = styled.div`
   max-width: ${p => p.theme.maxWidth}px;
@@ -21,6 +22,11 @@ export const SearchInterface = styled.div`
   input {
     margin-bottom: 0;
   }
+  ${Media.phone`
+    width: 90%;
+    display: grid;
+    grid-template-rows: 1fr 20px;
+  `}
 `
 
 const PalettesSearch = ({ searchRef }) => {

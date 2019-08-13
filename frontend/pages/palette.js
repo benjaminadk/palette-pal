@@ -2,13 +2,18 @@ import { useQuery } from '@apollo/react-hooks'
 import { PALETTE_QUERY } from '../apollo/query/palette'
 import { formatDistance } from '../lib/dateHelpers'
 import { getColorHeight } from '../lib/getColorHeight'
+import { createGradient } from '../lib/createGradient'
 import { AppContext } from '../components/Layout'
 import Color from '../components/Palette/Color'
 import Likes from '../components/Palette/Likes'
 import Svg from '../components/Svg'
 import styled from 'styled-components'
 
-export const BigPaletteWrapper = styled.div`
+export const BigPaletteWrapper = styled.div.attrs(p => ({
+  style: {
+    background: createGradient(p.colors, 'linear', '90deg')
+  }
+}))`
   height: calc(100vh - ${p => p.theme.headerHeight}px);
   overflow: auto;
   display: grid;
@@ -132,7 +137,7 @@ export default ({ pathname, query: { id } }) => {
   return (
     <AppContext.Consumer>
       {({ user, onTagClick }) => (
-        <BigPaletteWrapper>
+        <BigPaletteWrapper colors={allColors}>
           <BigPalette>
             <BigPaletteTitle>
               {title}

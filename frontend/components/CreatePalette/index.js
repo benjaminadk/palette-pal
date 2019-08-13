@@ -3,16 +3,27 @@ import { useMutation } from '@apollo/react-hooks'
 import { CREATE_PALETTE_MUTATION } from '../../apollo/mutation/createPalette'
 import TextInput from '../TextInput'
 import ColorInput from '../ColorInput'
+import Svg from '../Svg'
 import ErrorMessage from '../ErrorMessage'
 import { getColorHeight } from '../../lib/getColorHeight'
 import Router from 'next/router'
-import { CreateWrapper, CreateForm, CreateTitle, CreateColors, CreateButton } from './styles'
+import {
+  CreateWrapper,
+  CreateForm,
+  CreateTitle,
+  CreateColors,
+  CreateBottom,
+  CreateActions,
+  CreateButton
+} from './styles'
 
 const initalColors = ['', '', '', '', '', '', '']
 
 const CreatePalette = props => {
   const [title, setTitle] = useState('')
   const [colors, setColors] = useState(() => initalColors)
+  const [gradient, setGradient] = useState('linear')
+  const [direction, setDirection] = useState('0deg')
 
   const [createPalette, { error }] = useMutation(CREATE_PALETTE_MUTATION, {
     variables: { title, colors }
@@ -32,9 +43,15 @@ const CreatePalette = props => {
       Router.push({ pathname: '/palette', query: { id: res.data.createPalette.palette.id } })
     }
   }
+
+  function onDirection(deg) {
+    setGradient('linear')
+    setDirection(deg)
+  }
+
   return (
     <>
-      <CreateWrapper>
+      <CreateWrapper colors={colors.filter(c => c)} gradient={gradient} direction={direction}>
         <CreateForm>
           <CreateTitle>
             <TextInput
@@ -56,7 +73,15 @@ const CreatePalette = props => {
               />
             ))}
           </CreateColors>
-          <CreateButton onClick={onCreatePalette}>Create New Palette</CreateButton>
+          <CreateBottom>
+            <CreateActions>
+              <Svg name='radial' onClick={() => setGradient('radial')} />
+              <Svg name='top-right' onClick={() => onDirection('45deg')} />
+            </CreateActions>
+            <CreateButton onClick={onCreatePalette}>
+              <Svg name='check' />
+            </CreateButton>
+          </CreateBottom>
         </CreateForm>
       </CreateWrapper>
       <ErrorMessage error={error} />

@@ -1,18 +1,7 @@
 import Router from 'next/router'
-import { useMutation } from '@apollo/react-hooks'
-import { SIGNOUT_MUTATION } from '../../apollo/mutation/signout'
-import { CURRENT_USER_QUERY } from '../../apollo/query/currentUser'
 import { HeaderWrapper, InnerHeader, Logo, Navigation, Avatar } from './styles'
 
 const Header = ({ pathname, user, setShowRegister }) => {
-  const [signout] = useMutation(SIGNOUT_MUTATION)
-
-  async function onSignout() {
-    await signout({
-      refetchQueries: [{ query: CURRENT_USER_QUERY }]
-    })
-  }
-
   return (
     <HeaderWrapper pathname={pathname}>
       <InnerHeader>
@@ -27,7 +16,7 @@ const Header = ({ pathname, user, setShowRegister }) => {
           </li>
           <li onClick={() => Router.push('/about')}>About</li>
           {user ? (
-            <Avatar src={user.image} onClick={onSignout} />
+            <Avatar src={user.image} onClick={() => Router.push('/profile')} />
           ) : (
             <li onClick={() => setShowRegister(true)}>Sign Up</li>
           )}

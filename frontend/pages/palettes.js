@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { AppContext } from '../components/Layout'
 import Palette from '../components/Palette'
 import PalettesSearch from '../components/PalettesSearch'
+import Media from '../components/Media'
 import styled from 'styled-components'
 
 export const PalettesWrapper = styled.div`
@@ -18,6 +19,9 @@ export const PalettesGrid = styled.div`
   align-items: center;
   justify-items: center;
   padding-bottom: 40px;
+  ${Media.phone`
+    grid-template-columns: 1fr; 
+  `}
 `
 
 export const AutoReturn = styled.div.attrs(p => ({
@@ -36,7 +40,7 @@ export const AutoReturn = styled.div.attrs(p => ({
   color: ${p => p.theme.primary};
   border-radius: 50%;
   font-size: 20px;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3), -1px 0 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   user-select: none;
 `
