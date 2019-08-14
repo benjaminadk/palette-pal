@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Media from '../Media'
 
 export const HeaderWrapper = styled.header`
   position: fixed;
@@ -15,6 +16,9 @@ export const InnerHeader = styled.div`
   display: grid;
   grid-template-columns: 100px 1fr 400px;
   margin: 0 auto;
+  ${Media.phone`
+    grid-template-columns: 50px 10px 1fr;
+  `}
 `
 
 export const Logo = styled.div`
@@ -30,13 +34,25 @@ export const Logo = styled.div`
 
 export const Navigation = styled.nav`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   justify-items: center;
   list-style: none;
   li {
-    color: ${p => p.theme.white};
+    width: 100%;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    justify-items: center;
     cursor: pointer;
+    svg {
+      width: 30px;
+      height: 30px;
+      fill: ${p => p.theme.grey[2]};
+    }
+    &:hover svg {
+      fill: ${p => p.theme.white};
+    }
   }
 `
 

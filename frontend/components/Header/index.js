@@ -1,4 +1,5 @@
 import Router from 'next/router'
+import Svg from '../Svg'
 import { HeaderWrapper, InnerHeader, Logo, Navigation, Avatar } from './styles'
 
 const Header = ({ pathname, user, setShowRegister }) => {
@@ -12,9 +13,8 @@ const Header = ({ pathname, user, setShowRegister }) => {
         <Navigation>
           <li onClick={() => Router.push('/palettes')}>Palettes</li>
           <li onClick={user ? () => Router.push('/create') : () => setShowRegister(true)}>
-            Create
+            <Svg name='add' />
           </li>
-          <li onClick={() => Router.push('/about')}>About</li>
           {user ? (
             <Avatar src={user.image} onClick={() => Router.push('/profile')} />
           ) : (

@@ -28,7 +28,7 @@ export const CreateWrapper = styled.div.attrs(p => ({
 `
 
 export const CreateForm = styled.div`
-  width: 300px;
+  width: 350px;
   height: 450px;
   display: grid;
   grid-template-rows: 15% 70% 15%;

@@ -18,6 +18,9 @@ export const SearchInterface = styled.div`
   padding: 20px;
   input {
     margin-bottom: 0;
+    ${Media.phone`
+      margin-bottom: 5px;
+    `}
   }
   ${Media.phone`
     width: 90%;
