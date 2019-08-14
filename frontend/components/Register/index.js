@@ -16,16 +16,14 @@ const Register = () => {
             <Signup
               show={showRegister}
               onHintClick={() => setMode('signin')}
-              onClose={() => {
-                setShowRegister(false)
-                setShowConfirm(true)
-              }}
+              setShowRegister={setShowRegister}
+              setShowConfirm={setShowConfirm}
             />
           ) : (
             <Signin
               show={showRegister}
               onHintClick={() => setMode('signup')}
-              onClose={() => setShowRegister(false)}
+              setShowRegister={setShowRegister}
             />
           )}
         </>

@@ -1,13 +1,13 @@
 import { AppContext } from '../Layout'
 import TextInput from '../TextInput'
 import RadioButtons from './RadioButtons'
-import { PaletteSearchWrapper, SearchInterface } from './styles'
+import { PaletteSearchBarWrapper, SearchInterface } from './styles'
 
 const PalettesSearch = ({ searchRef }) => {
   return (
     <AppContext.Consumer>
       {({ searchTerm, onSearchTermChange }) => (
-        <PaletteSearchWrapper ref={searchRef}>
+        <PaletteSearchBarWrapper ref={searchRef}>
           <SearchInterface>
             <TextInput
               type='text'
@@ -17,7 +17,7 @@ const PalettesSearch = ({ searchRef }) => {
             />
             <RadioButtons />
           </SearchInterface>
-        </PaletteSearchWrapper>
+        </PaletteSearchBarWrapper>
       )}
     </AppContext.Consumer>
   )

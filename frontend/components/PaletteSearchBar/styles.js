@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Media from '../Media'
 
-export const PaletteSearchWrapper = styled.div`
+export const PaletteSearchBarWrapper = styled.div`
   max-width: ${p => p.theme.maxWidth}px;
   display: grid;
   align-items: center;

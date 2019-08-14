@@ -6,7 +6,7 @@ import TextInput from '../TextInput'
 import ErrorMessage from '../ErrorMessage'
 import { Modal, Form, Submit, HintText } from './styles'
 
-const Signin = ({ show, onHintClick, onClose }) => {
+const Signin = ({ show, onHintClick, setShowRegister }) => {
   const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION)
 
   const [email, setEmail] = useState('')
@@ -14,13 +14,11 @@ const Signin = ({ show, onHintClick, onClose }) => {
 
   async function onSubmit(e) {
     e.preventDefault()
-
     await signin({
       variables: { email, password },
       refetchQueries: [{ query: CURRENT_USER_QUERY }]
     })
-
-    onClose()
+    setShowRegister(false)
   }
 
   return (

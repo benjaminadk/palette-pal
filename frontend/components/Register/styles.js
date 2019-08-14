@@ -26,6 +26,7 @@ export const Modal = styled.div`
 export const Form = styled.form`
   width: 400px;
   padding: 30px;
+  user-select: none;
   h2 {
     font-family: ${p => p.theme.fontBold};
     font-size: 30px;
@@ -84,5 +85,13 @@ export const HintText = styled.div`
     &:hover {
       text-decoration: underline;
     }
+  }
+`
+
+export const LinkText = styled.span`
+  color: ${p => p.theme.link};
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
   }
 `

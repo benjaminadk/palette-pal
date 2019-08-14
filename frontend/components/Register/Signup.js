@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import Link from 'next/link'
+import Router from 'next/router'
 import { useMutation } from '@apollo/react-hooks'
 import { SIGNUP_MUTATION } from '../../apollo/mutation/signup'
 import TextInput from '../TextInput'
 import ErrorMessage from '../ErrorMessage'
-import { Modal, Form, CheckboxWrapper, Submit, HintText } from './styles'
+import { Modal, Form, CheckboxWrapper, Submit, HintText, LinkText } from './styles'
 
-const Signup = ({ show, onHintClick, onClose }) => {
+const Signup = ({ show, onHintClick, setShowRegister, setShowConfirm }) => {
   const [signup, { loading, error }] = useMutation(SIGNUP_MUTATION)
 
   const [name, setName] = useState('')
@@ -16,12 +16,16 @@ const Signup = ({ show, onHintClick, onClose }) => {
 
   async function onSubmit(e) {
     e.preventDefault()
-
     await signup({
       variables: { agree, name, email, password }
     })
+    setShowRegister(false)
+    setShowConfirm(true)
+  }
 
-    onClose()
+  function onLinkClick(pathname) {
+    Router.push(pathname)
+    setShowRegister(false)
   }
 
   return (
@@ -54,14 +58,11 @@ const Signup = ({ show, onHintClick, onClose }) => {
             <CheckboxWrapper>
               <input type='checkbox' checked={agree} onChange={() => setAgree(!agree)} />
               <p>
-                I accept the{' '}
-                <Link href='/terms-of-use'>
-                  <a>Terms of Use</a>
-                </Link>{' '}
-                &{' '}
-                <Link href='/privacy-policy'>
-                  <a>Privacy Policy</a>
-                </Link>
+                I accept the
+                <LinkText onClick={() => onLinkClick('/terms-of-use')}>
+                  Terms of Use
+                </LinkText> &{' '}
+                <LinkText onClick={() => onLinkClick('/privacy-policy')}>Privacy Policy</LinkText>
               </p>
             </CheckboxWrapper>
           </fieldset>
