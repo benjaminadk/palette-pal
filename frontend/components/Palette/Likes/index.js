@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { AppContext } from '../../Layout'
 import { LIKE_PALETTE_MUTATION } from '../../../apollo/mutation/likePalette'
+import { LIKED_PALETTES_QUERY } from '../../../apollo/query/likedPalettes'
 import Svg from '../../Svg'
 import { LikesWrapper } from './styles'
 
@@ -20,8 +21,10 @@ const Likes = ({ pathname, user, id, likes, totalLikes }) => {
     if (!user) return
 
     await likePalette({
-      variables: { paletteId: id }
+      variables: { paletteId: id },
+      refetchQueries: [{ query: LIKED_PALETTES_QUERY, variables: { userId: user.id } }]
     })
+
     await refetchPalettes()
   }
 

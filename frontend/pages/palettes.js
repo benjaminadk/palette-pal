@@ -1,48 +1,12 @@
 import { useRef, useState } from 'react'
 import { AppContext } from '../components/Layout'
-import Palette from '../components/Palette'
-import PalettesSearch from '../components/PalettesSearch'
-import Media from '../components/Media'
+import PaletteSearch from '../components/PaletteSearch'
+import PaletteList from '../components/PaletteList'
 import styled from 'styled-components'
 
 export const PalettesWrapper = styled.div`
   height: calc(100vh - ${p => p.theme.headerHeight}px);
   overflow: auto;
-`
-
-export const PalettesGrid = styled.div`
-  max-width: ${p => p.theme.maxWidth}px;
-  margin: 20px auto 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-row-gap: 40px;
-  align-items: center;
-  justify-items: center;
-  padding-bottom: 40px;
-  ${Media.phone`
-    grid-template-columns: 1fr; 
-  `}
-`
-
-export const AutoReturn = styled.div.attrs(p => ({
-  style: {
-    display: p.show ? 'grid' : 'none'
-  }
-}))`
-  position: absolute;
-  bottom: 10px;
-  right: calc(50% - 20px);
-  width: 40px;
-  height: 40px;
-  align-items: center;
-  justify-items: center;
-  background: ${p => p.theme.white};
-  color: ${p => p.theme.primary};
-  border-radius: 50%;
-  font-size: 20px;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3), -1px 0 2px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  user-select: none;
 `
 
 const Palettes = ({ pathname }) => {
@@ -59,7 +23,7 @@ const Palettes = ({ pathname }) => {
     setShowAutoReturn(scrollTop > 0)
   }
 
-  function onAutoReturn() {
+  function onAutoReturnClick() {
     search.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
   }
 
@@ -67,20 +31,14 @@ const Palettes = ({ pathname }) => {
     <AppContext.Consumer>
       {({ loading, palettes, onAvatarClick, fetchMorePalettes }) => (
         <PalettesWrapper onScroll={e => onScroll(e, fetchMorePalettes)}>
-          <PalettesSearch searchRef={search} />
-          <PalettesGrid>
-            {palettes.map(palette => (
-              <Palette
-                key={palette.id}
-                palette={palette}
-                pathname={pathname}
-                onAvatarClick={onAvatarClick}
-              />
-            ))}
-          </PalettesGrid>
-          <AutoReturn show={showAutoReturn} onClick={onAutoReturn}>
-            {'\u2bc5'}
-          </AutoReturn>
+          <PaletteSearch searchRef={search} />
+          <PaletteList
+            pathname={pathname}
+            palettes={palettes}
+            showAutoReturn={showAutoReturn}
+            onAvatarClick={onAvatarClick}
+            onAutoReturnClick={onAutoReturnClick}
+          />
         </PalettesWrapper>
       )}
     </AppContext.Consumer>
