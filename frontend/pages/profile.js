@@ -1,54 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Router from 'next/router'
 import styled from 'styled-components'
 import { AppContext } from '../components/Layout'
 import { useApolloClient, useMutation } from '@apollo/react-hooks'
-import { LIKED_PALETTES_QUERY } from '../apollo/query/likedPalettes'
+import { LIKED_PALETTES_QUERY, perPage } from '../apollo/query/likedPalettes'
 import { SEARCH_PALETTES_QUERY } from '../apollo/query/searchPalettes'
 import { SIGNOUT_MUTATION } from '../apollo/mutation/signout'
 import { CURRENT_USER_QUERY } from '../apollo/query/currentUser'
+import usePrevious from '../lib/usePrevious'
+import ProfileMenu from '../components/ProfileMenu'
 import PaletteList from '../components/PaletteList'
 
 export const ProfileWrapper = styled.div`
   height: calc(100vh - ${p => p.theme.headerHeight}px);
   overflow-y: scroll;
 `
-
-export const ProfileMenuWrapper = styled.div`
-  max-width: ${p => p.theme.maxWidth}px;
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  margin: 20px auto 0;
-  user-select: none;
-`
-
-export const ProfileMenu = styled.div`
-  width: 75%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: center;
-  justify-items: center;
-  background: ${p => p.theme.white};
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-`
-
-export const ProfileMenuItem = styled.div`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  background: ${p => (p.active ? p.theme.primary : 'none')};
-  color: ${p => (p.active ? p.theme.white : p.theme.black)};
-  padding: 20px;
-  &:hover {
-    background: ${p => (p.active ? p.theme.primary : p.theme.grey[0])};
-  }
-`
-
-const tabs = ['Profile', 'Palettes', 'Likes', 'Signout']
 
 export default ({ pathname }) => {
   return (
@@ -69,13 +35,28 @@ const Profile = ({ pathname, user }) => {
 
   const [loading, setLoading] = useState(false)
   const [palettes, setPalettes] = useState([])
+  const [skip, setSkip] = useState(0)
   const [hasNextPage, setHasNextPage] = useState(true)
+
   const [menuIndex, setMenuIndex] = useState(0)
+  const [showAutoReturn, setShowAutoReturn] = useState(false)
+
+  const menu = useRef()
+
+  const prevSkip = usePrevious(skip)
 
   useEffect(() => {
-    if (menuIndex === 1) fetchOwnedPalettes()
-    else if (menuIndex === 2) fetchLikedPalettes()
+    if ([1, 2].includes(menuIndex)) {
+      setSkip(0)
+      fetchPalettes()
+    }
   }, [menuIndex])
+
+  useEffect(() => {
+    if (skip > prevSkip && hasNextPage) {
+      fetchPalettes(false, true)
+    }
+  }, [skip])
 
   async function onMenuItemClick(i) {
     if (i === 3) {
@@ -86,47 +67,43 @@ const Profile = ({ pathname, user }) => {
     }
   }
 
-  async function fetchLikedPalettes(fetchMore = false) {
-    await setLoading(true)
-    const res = await client.query({
-      query: LIKED_PALETTES_QUERY,
-      variables: { userId: user.id }
+  async function fetchPalettes(initial = true, fetchMore = false) {
+    const query = menuIndex === 2 ? LIKED_PALETTES_QUERY : SEARCH_PALETTES_QUERY
+    const variables = Object.assign(menuIndex === 2 ? { userId: user.id } : { ownerId: user.id }, {
+      first: perPage,
+      skip: initial ? 0 : skip
     })
-
+    await setLoading(false)
+    const res = await client.query({ query, variables })
     setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
     setPalettes(curr => (fetchMore ? [...curr, ...res.data.palettes] : res.data.palettes))
     setLoading(false)
   }
 
-  async function fetchOwnedPalettes(fetchMore = false) {
-    await setLoading(true)
-    const res = await client.query({
-      query: SEARCH_PALETTES_QUERY,
-      variables: { ownerId: user.id }
-    })
+  function onScroll(e) {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
+    if (scrollTop + clientHeight >= scrollHeight) {
+      setSkip(skip + perPage)
+    }
+    setShowAutoReturn(scrollTop > 0)
+  }
 
-    setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
-    setPalettes(curr => (fetchMore ? [...curr, ...res.data.palettes] : res.data.palettes))
-    setLoading(false)
+  function onAutoReturnClick() {
+    menu.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
   }
 
   return (
-    <ProfileWrapper>
-      <ProfileMenuWrapper>
-        <ProfileMenu>
-          {tabs.map((tab, i) => (
-            <ProfileMenuItem key={tab} active={menuIndex === i} onClick={() => onMenuItemClick(i)}>
-              {tab}
-            </ProfileMenuItem>
-          ))}
-        </ProfileMenu>
-      </ProfileMenuWrapper>
+    <ProfileWrapper onScroll={onScroll}>
+      <ProfileMenu menuRef={menu} menuIndex={menuIndex} onMenuItemClick={onMenuItemClick} />
       {menuIndex === 0 ? (
         <div>profile</div>
-      ) : menuIndex === 1 ? (
-        <PaletteList pathname={pathname} palettes={palettes} />
-      ) : menuIndex === 2 ? (
-        <PaletteList pathname={pathname} palettes={palettes} />
+      ) : [1, 2].includes(menuIndex) ? (
+        <PaletteList
+          pathname={pathname}
+          palettes={palettes}
+          showAutoReturn={showAutoReturn}
+          onAutoReturnClick={onAutoReturnClick}
+        />
       ) : null}
     </ProfileWrapper>
   )

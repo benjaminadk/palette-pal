@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import Router from 'next/router'
 import styled, { ThemeProvider } from 'styled-components'
@@ -6,6 +6,7 @@ import debounce from 'lodash.debounce'
 import { THEME } from '../config'
 import { SEARCH_PALETTES_QUERY, perPage } from '../apollo/query/searchPalettes'
 import { CURRENT_USER_QUERY } from '../apollo/query/currentUser'
+import usePrevious from '../lib/usePrevious'
 import Header from './Header'
 import Register from './Register'
 import Confirm from './Confirm'
@@ -29,14 +30,6 @@ export const AppContext = React.createContext({
   fetchMorePalettes: () => {}
 })
 
-function usePrevious(value) {
-  const ref = useRef()
-  useEffect(() => {
-    ref.current = value
-  })
-  return ref.current
-}
-
 export const LayoutWrapper = styled.div`
   height: 100vh;
   overflow: hidden;
@@ -57,7 +50,6 @@ const Layout = ({ pathname, children }) => {
   const [loading, setLoading] = useState(false)
   const [palettes, setPalettes] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [first, setFirst] = useState(() => perPage)
   const [skip, setSkip] = useState(0)
   const [orderBy, setOrderBy] = useState('createdAt_DESC')
   const [ownerId, setOwnerId] = useState('')
@@ -81,7 +73,7 @@ const Layout = ({ pathname, children }) => {
     await setLoading(true)
     const res = await client.query({
       query: SEARCH_PALETTES_QUERY,
-      variables: { searchTerm, first, skip, orderBy, ownerId }
+      variables: { searchTerm, first: perPage, skip, orderBy, ownerId }
     })
 
     setHasNextPage(res.data.palettesConnection.pageInfo.hasNextPage)
@@ -114,7 +106,6 @@ const Layout = ({ pathname, children }) => {
   async function onOrderByChange(order) {
     await setOrderBy(order)
     await setSkip(0)
-    await setFirst(perPage)
     await setLoading(true)
     const res = await client.query({
       query: SEARCH_PALETTES_QUERY,
