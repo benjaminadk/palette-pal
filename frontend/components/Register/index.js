@@ -1,31 +1,36 @@
 import { useState } from 'react'
+import { AppContext } from '../Layout'
 import { Backdrop } from './styles'
 import Signup from './Signup'
 import Signin from './Signin'
 
-const Register = ({ show, setShowRegister, setShowConfirm }) => {
+const Register = () => {
   const [mode, setMode] = useState('signup')
 
   return (
-    <>
-      <Backdrop show={show} onClick={() => setShowRegister(false)} />
-      {mode === 'signup' ? (
-        <Signup
-          show={show}
-          onHintClick={() => setMode('signin')}
-          onClose={() => {
-            setShowRegister(false)
-            setShowConfirm(true)
-          }}
-        />
-      ) : (
-        <Signin
-          show={show}
-          onHintClick={() => setMode('signup')}
-          onClose={() => setShowRegister(false)}
-        />
+    <AppContext.Consumer>
+      {({ showRegister, setShowRegister, setShowConfirm }) => (
+        <>
+          <Backdrop show={showRegister} onClick={() => setShowRegister(false)} />
+          {mode === 'signup' ? (
+            <Signup
+              show={showRegister}
+              onHintClick={() => setMode('signin')}
+              onClose={() => {
+                setShowRegister(false)
+                setShowConfirm(true)
+              }}
+            />
+          ) : (
+            <Signin
+              show={showRegister}
+              onHintClick={() => setMode('signup')}
+              onClose={() => setShowRegister(false)}
+            />
+          )}
+        </>
       )}
-    </>
+    </AppContext.Consumer>
   )
 }
 

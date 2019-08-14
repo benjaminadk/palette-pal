@@ -7,22 +7,37 @@ import { AppContext } from '../components/Layout'
 import Color from '../components/Palette/Color'
 import Likes from '../components/Palette/Likes'
 import Svg from '../components/Svg'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+export const gradientShift = keyframes`
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+`
 
 export const BigPaletteWrapper = styled.div.attrs(p => ({
   style: {
-    background: createGradient(p.colors, 'linear', '90deg')
+    background: createGradient(p.colors, 'linear', '-45deg')
   }
 }))`
+  width: 100%;
   height: calc(100vh - ${p => p.theme.headerHeight}px);
   overflow: auto;
   display: grid;
   align-items: center;
   justify-items: center;
+  background-size: 400% 400% !important;
+  animation: ${gradientShift} 15s ease infinite;
 `
 
 export const BigPalette = styled.div`
-  width: 50%;
+  width: 600px;
   height: 90%;
   display: grid;
   grid-template-rows: 12% 73% 15%;

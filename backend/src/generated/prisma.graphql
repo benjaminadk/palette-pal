@@ -198,13 +198,21 @@ scalar Long
 type Mutation {
   createLike(data: LikeCreateInput!): Like!
   updateLike(data: LikeUpdateInput!, where: LikeWhereUniqueInput!): Like
-  upsertLike(where: LikeWhereUniqueInput!, create: LikeCreateInput!, update: LikeUpdateInput!): Like!
+  upsertLike(
+    where: LikeWhereUniqueInput!
+    create: LikeCreateInput!
+    update: LikeUpdateInput!
+  ): Like!
   deleteLike(where: LikeWhereUniqueInput!): Like
   deleteManyLikes(where: LikeWhereInput): BatchPayload!
   createPalette(data: PaletteCreateInput!): Palette!
   updatePalette(data: PaletteUpdateInput!, where: PaletteWhereUniqueInput!): Palette
   updateManyPalettes(data: PaletteUpdateManyMutationInput!, where: PaletteWhereInput): BatchPayload!
-  upsertPalette(where: PaletteWhereUniqueInput!, create: PaletteCreateInput!, update: PaletteUpdateInput!): Palette!
+  upsertPalette(
+    where: PaletteWhereUniqueInput!
+    create: PaletteCreateInput!
+    update: PaletteUpdateInput!
+  ): Palette!
   deletePalette(where: PaletteWhereUniqueInput!): Palette
   deleteManyPalettes(where: PaletteWhereInput): BatchPayload!
   createTag(data: TagCreateInput!): Tag!
@@ -216,7 +224,11 @@ type Mutation {
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertUser(
+    where: UserWhereUniqueInput!
+    create: UserCreateInput!
+    update: UserUpdateInput!
+  ): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
@@ -245,8 +257,24 @@ type Palette {
   colors: [String!]!
   names: [String!]!
   totalLikes: Int
-  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  likes(
+    where: LikeWhereInput
+    orderBy: LikeOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Like!]
+  tags(
+    where: TagWhereInput
+    orderBy: TagOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Tag!]
   owner: User
 }
 
@@ -591,17 +619,81 @@ input PaletteWhereUniqueInput {
 
 type Query {
   like(where: LikeWhereUniqueInput!): Like
-  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like]!
-  likesConnection(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeConnection!
+  likes(
+    where: LikeWhereInput
+    orderBy: LikeOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Like]!
+  likesConnection(
+    where: LikeWhereInput
+    orderBy: LikeOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): LikeConnection!
   palette(where: PaletteWhereUniqueInput!): Palette
-  palettes(where: PaletteWhereInput, orderBy: PaletteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Palette]!
-  palettesConnection(where: PaletteWhereInput, orderBy: PaletteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PaletteConnection!
+  palettes(
+    where: PaletteWhereInput
+    orderBy: PaletteOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Palette]!
+  palettesConnection(
+    where: PaletteWhereInput
+    orderBy: PaletteOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): PaletteConnection!
   tag(where: TagWhereUniqueInput!): Tag
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
-  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  tags(
+    where: TagWhereInput
+    orderBy: TagOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Tag]!
+  tagsConnection(
+    where: TagWhereInput
+    orderBy: TagOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TagConnection!
   user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User]!
+  usersConnection(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserConnection!
   node(id: ID!): Node
 }
 
@@ -809,8 +901,24 @@ type User {
   confirmed: Boolean!
   forgotPasswordLock: Boolean!
   role: Role!
-  palettes(where: PaletteWhereInput, orderBy: PaletteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Palette!]
-  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
+  palettes(
+    where: PaletteWhereInput
+    orderBy: PaletteOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Palette!]
+  likes(
+    where: LikeWhereInput
+    orderBy: LikeOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Like!]
 }
 
 type UserConnection {

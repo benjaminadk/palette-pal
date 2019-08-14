@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { copyToClipboard } from '../../../lib/copyToClipboard'
 import { getContrastText } from '../../../lib/getContrastText'
 import { getColorHeight } from '../../../lib/getColorHeight'
@@ -7,12 +7,23 @@ import { ColorWrapper, ColorCode, ColorCopied, ColorName } from './styles'
 const Color = ({ index, pathname, color, name, totalColors, onClick }) => {
   const [show, setShow] = useState(false)
 
+  const timeout = useRef()
+
+  useEffect(() => {
+    if (show) {
+      timeout.current = setTimeout(() => setShow(false), 4000)
+    }
+
+    return () => {
+      clearTimeout(timeout.current)
+    }
+  }, [show])
+
   function onCopy(e) {
     if (show) return
     e.stopPropagation()
     copyToClipboard(color)
     setShow(true)
-    setTimeout(() => setShow(false), 4000)
   }
 
   const height = getColorHeight(totalColors, index)

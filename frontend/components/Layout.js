@@ -16,6 +16,7 @@ export const AppContext = React.createContext({
   palettes: [],
   searchTerm: '',
   orderBy: '',
+  showRegister: false,
   setShowConfirm: () => {},
   setShowRegister: () => {},
   setSearchTerm: () => {},
@@ -162,6 +163,7 @@ const Layout = ({ pathname, children }) => {
           palettes,
           searchTerm,
           orderBy,
+          showRegister,
           setShowRegister,
           setShowConfirm,
           setSearchTerm,
@@ -177,11 +179,7 @@ const Layout = ({ pathname, children }) => {
         <LayoutWrapper>
           <Header pathname={pathname} user={user} setShowRegister={setShowRegister} />
           <Main pathname={pathname}>{children}</Main>
-          <Register
-            show={showRegister}
-            setShowRegister={setShowRegister}
-            setShowConfirm={setShowConfirm}
-          />
+          <Register />
           <Confirm show={showConfirm} />
         </LayoutWrapper>
       </AppContext.Provider>

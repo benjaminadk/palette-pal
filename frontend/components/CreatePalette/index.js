@@ -23,7 +23,7 @@ const CreatePalette = props => {
   const [title, setTitle] = useState('')
   const [colors, setColors] = useState(() => initalColors)
   const [gradient, setGradient] = useState('linear')
-  const [direction, setDirection] = useState('0deg')
+  const [gradientDirection, setGradientDirection] = useState('0deg')
 
   const [createPalette, { error }] = useMutation(CREATE_PALETTE_MUTATION, {
     variables: { title, colors }
@@ -46,12 +46,16 @@ const CreatePalette = props => {
 
   function onDirection(deg) {
     setGradient('linear')
-    setDirection(deg)
+    setGradientDirection(deg)
   }
 
   return (
     <>
-      <CreateWrapper colors={colors.filter(c => c)} gradient={gradient} direction={direction}>
+      <CreateWrapper
+        colors={colors.filter(c => c)}
+        gradient={gradient}
+        gradientDirection={gradientDirection}
+      >
         <CreateForm>
           <CreateTitle>
             <TextInput
@@ -76,7 +80,7 @@ const CreatePalette = props => {
           <CreateBottom>
             <CreateActions>
               <Svg name='radial' onClick={() => setGradient('radial')} />
-              <Svg name='top-right' onClick={() => onDirection('45deg')} />
+              <Svg name='top-right' onClick={() => onDirection('-45deg')} />
             </CreateActions>
             <CreateButton onClick={onCreatePalette}>
               <Svg name='check' />

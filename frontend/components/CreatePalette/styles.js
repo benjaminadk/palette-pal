@@ -1,15 +1,30 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { createGradient } from '../../lib/createGradient'
+
+export const gradientShift = keyframes`
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+`
 
 export const CreateWrapper = styled.div.attrs(p => ({
   style: {
-    background: p.colors.length ? createGradient(p.colors, p.gradient, p.direction) : 'transparent'
+    background: createGradient(p.colors, p.gradient, p.gradientDirection)
   }
 }))`
+  width: 100%;
   height: calc(100vh - ${p => p.theme.headerHeight}px);
   display: grid;
   align-items: center;
   justify-items: center;
+  background-size: 400% 400% !important;
+  animation: ${gradientShift} 15s ease infinite;
 `
 
 export const CreateForm = styled.div`

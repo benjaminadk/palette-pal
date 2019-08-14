@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+const normalPathnames = ['/palettes', '/profile']
+
 export const ColorWrapper = styled.div.attrs(p => ({
   style: {
     height: p.height,
@@ -23,7 +25,7 @@ export const ColorCode = styled.div.attrs(p => ({
   className: 'code',
   style: {
     color: p.textColor,
-    fontSize: ['/palettes'].includes(p.pathname) ? '12px' : '20px'
+    fontSize: normalPathnames.includes(p.pathname) ? '12px' : '20px'
   }
 }))`
   position: absolute;
@@ -42,10 +44,10 @@ export const ColorCode = styled.div.attrs(p => ({
 export const ColorName = styled.div.attrs(p => ({
   className: 'name',
   style: {
-    visibility: ['/palettes'].includes(p.pathname) ? 'hidden' : 'visible',
+    visibility: normalPathnames.includes(p.pathname) ? 'hidden' : 'visible',
     display: p.show ? 'block' : 'none',
     color: p.textColor,
-    fontSize: ['/palettes'].includes(p.pathname) ? '12px' : '20px'
+    fontSize: normalPathnames.includes(p.pathname) ? '12px' : '20px'
   }
 }))`
   position: absolute;
@@ -62,7 +64,7 @@ export const ColorCopied = styled.div.attrs(p => ({
   style: {
     display: p.show ? 'block' : 'none',
     color: p.textColor,
-    fontSize: ['/palettes'].includes(p.pathname) ? '12px' : '20px'
+    fontSize: normalPathnames.includes(p.pathname) ? '12px' : '20px'
   }
 }))`
   position: absolute;

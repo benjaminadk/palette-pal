@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import Router from 'next/router'
 import { AppContext } from '../Layout'
 import { formatDistance } from '../../lib/dateHelpers'
@@ -42,6 +43,32 @@ const Palette = ({ palette, pathname, onAvatarClick }) => {
       )}
     </AppContext.Consumer>
   )
+}
+
+Palette.propTypes = {
+  palette: PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    colors: PropTypes.arrayOf(PropTypes.string),
+    names: PropTypes.arrayOf(PropTypes.string),
+    totalLikes: PropTypes.number,
+    likes: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        user: PropTypes.shape({
+          id: PropTypes.string
+        })
+      })
+    ),
+    createdAt: PropTypes.string,
+    owner: PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      image: PropTypes.string
+    })
+  }).isRequired,
+  pathname: PropTypes.string.isRequired,
+  onAvatarClick: PropTypes.func
 }
 
 export default Palette
