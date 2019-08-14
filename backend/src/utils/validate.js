@@ -33,5 +33,11 @@ module.exports = (mode, args) => {
       throw new UserInputError('Title must be at least 3 characters')
     if (args.colors.filter(c => c).length < paletteColorsLength)
       throw new UserInputError('Palette must contain at least 4 colors')
+  } else if (mode === 'updateUser') {
+    if (!args.data.name) throw new UserInputError('Name field is required')
+    if (args.data.name.length < usernameLength)
+      throw new UserInputError('Name must be 3 at least characters')
+    if (!args.data.email) throw new UserInputError('Email field is required')
+    if (!emailRegex.test(args.email)) throw new UserInputError('Invalid email address')
   }
 }

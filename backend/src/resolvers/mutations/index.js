@@ -7,6 +7,7 @@ module.exports = {
   signout: require('./signout'),
   sendForgotPasswordEmail: require('./sendForgotPasswordEmail'),
   forgotPasswordChange: require('./forgotPasswordChange'),
+  updateUser: combineResolvers(isAuthenticated, require('./updateUser')),
   createPalette: combineResolvers(isAuthenticated, require('./createPalette')),
   likePalette: combineResolvers(isAuthenticated, require('./likePalette'))
 }

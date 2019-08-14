@@ -14,7 +14,7 @@ import {
 } from './styles'
 
 const Palette = ({ palette, pathname, onAvatarClick }) => {
-  const { id, title, colors, names, totalLikes, likes, tags, owner, createdAt } = palette
+  const { id, title, colors, names, totalLikes, likes, owner, createdAt } = palette
   const allColors = colors.filter(color => color)
 
   return (

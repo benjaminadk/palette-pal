@@ -18,6 +18,7 @@ type Mutation {
   signout: BasicPayload
   sendForgotPasswordEmail(email: String!): BasicPayload
   forgotPasswordChange(newPassword: String!, key: String!): BasicPayload
+  updateUser(date: UserUpdateInput): UserPayload
   createPalette(title: String!, colors: [String!]): PalettePayload
   likePalette(paletteId: ID!): LikePayload
 }
