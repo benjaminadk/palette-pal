@@ -1,3 +1,3 @@
 # Palette Pal
 
-an open source 🎨 source of color
+The open source 🎨 source of color
