@@ -58,7 +58,7 @@ export const CreateBottom = styled.div`
   justify-self: center;
   align-self: center;
   width: 90%;
-  height: 90%;
+  /* height: 90%; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -76,23 +76,18 @@ export const CreateActions = styled.div`
 
 export const CreateButton = styled.button`
   justify-self: flex-end;
-  width: 50px;
-  height: 50px;
-  background: ${p => p.theme.grey[1]};
+  align-self: center;
+  width: 150px;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background: ${p => p.theme.primary};
+  color: ${p => p.theme.white};
   border: 0;
   border-radius: 2px;
   outline: 0;
+  font-family: ${p => p.theme.fontBold};
+  font-size: 16px;
+  padding: 12px 0;
   cursor: pointer;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
-  &:hover {
-    background: ${p => p.theme.primary};
-  }
-  &:hover svg {
-    fill: ${p => p.theme.white};
-  }
-  svg {
-    width: 16px;
-    height: 16px;
-    fill: ${p => p.theme.primary};
-  }
 `

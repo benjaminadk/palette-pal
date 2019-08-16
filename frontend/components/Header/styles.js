@@ -14,7 +14,7 @@ export const InnerHeader = styled.div`
   max-width: ${p => p.theme.maxWidth}px;
   height: 100%;
   display: grid;
-  grid-template-columns: 100px 1fr 400px;
+  grid-template-columns: 150px 1fr 400px;
   margin: 0 auto;
   ${Media.phone`
     grid-template-columns: 50px 10px 1fr;
@@ -25,11 +25,9 @@ export const Logo = styled.div`
   display: grid;
   align-items: center;
   justify-items: center;
+  font-size: 20px;
+  color: ${p => p.theme.white};
   cursor: pointer;
-  img {
-    width: 40px;
-    height: 40px;
-  }
 `
 
 export const Navigation = styled.nav`
@@ -38,21 +36,45 @@ export const Navigation = styled.nav`
   align-items: center;
   justify-items: center;
   list-style: none;
-  li {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    cursor: pointer;
-    svg {
-      width: 30px;
-      height: 30px;
-      fill: ${p => p.theme.grey[2]};
-    }
-    &:hover svg {
-      fill: ${p => p.theme.white};
-    }
+`
+
+export const NavLink = styled.li`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  color: ${p => p.theme.white};
+  cursor: pointer;
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: ${p => p.theme.white};
+  }
+  &:hover svg {
+    fill: ${p => p.theme.grey[2]};
+  }
+`
+
+export const TotalPalettesWrapper = styled.li`
+  display: flex;
+  align-items: center;
+  color: ${p => p.theme.white};
+  cursor: pointer;
+  &:hover {
+    color: ${p => p.theme.grey[2]};
+  }
+  &:hover .total {
+    background: ${p => p.theme.grey[2]};
+  }
+  .total {
+    background: ${p => p.theme.white};
+    color: ${p => p.theme.primary};
+    border-radius: 10px;
+    font-family: ${p => p.theme.fontBold};
+    font-size: 12px;
+    margin-left: 5px;
+    padding: 0 5px;
   }
 `
 

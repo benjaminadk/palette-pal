@@ -27,7 +27,8 @@ export const MenuItem = styled.div`
   align-items: center;
   justify-items: center;
   background: ${p => (p.active ? p.theme.primary : 'none')};
-  color: ${p => (p.active ? p.theme.white : p.theme.black)};
+  color: ${p => (p.active ? p.theme.white : p.theme.primary)};
+  font-family: ${p => p.theme.fontBold};
   padding: 20px;
   &:hover {
     background: ${p => (p.active ? p.theme.primary : p.theme.grey[0])};

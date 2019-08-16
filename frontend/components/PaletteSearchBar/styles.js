@@ -10,7 +10,7 @@ export const PaletteSearchBarWrapper = styled.div`
 `
 
 export const SearchInterface = styled.div`
-  width: 50%;
+  width: 60%;
   display: flex;
   align-items: center;
   background: ${p => p.theme.white};

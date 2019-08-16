@@ -6,7 +6,7 @@ import TextInput from '../TextInput'
 export const SearchInputWrapper = styled.form`
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   input {
     margin-bottom: 0;
     border-top-right-radius: 0;
@@ -40,7 +40,7 @@ const SearchInput = () => {
         <SearchInputWrapper onSubmit={e => onSubmit(e, fetchPalettes)}>
           <TextInput
             type='text'
-            placeholder='Welcome to the final frontier of color palettes'
+            placeholder={`Try searching for a color -> "blue" or a palette name -> "google"`}
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />

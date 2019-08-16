@@ -56,20 +56,13 @@ export const Button = styled.div`
   display: grid;
   align-items: center;
   justify-items: center;
-  background: ${p => p.theme.grey[1]};
+  background: ${p => p.theme.primary};
   border-radius: 2px;
   padding: 4px 8px;
-  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  &:hover {
-    background: ${p => p.theme.primary};
-  }
-  &:hover svg {
-    fill: ${p => p.theme.white};
-  }
   svg {
-    width: 16px;
-    height: 16px;
-    fill: ${p => p.theme.primary};
+    width: 20px;
+    height: 20px;
+    fill: ${p => p.theme.white};
   }
 `

@@ -9,11 +9,14 @@ export const RadioButtonsWrapper = styled.div`
 export const Radio = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 4px;
   input {
+    margin: 0;
     margin-right: 2px;
   }
   label {
     font-size: 12px;
+    user-select: none;
   }
 `
 
@@ -31,11 +34,12 @@ const RadioButtons = () => {
             <Radio key={option.name}>
               <input
                 type='radio'
+                id={option.name}
                 checked={option.value === orderBy}
                 value={option.value}
                 onChange={e => onOrderByChange(e.target.value)}
               />
-              <label>{option.name}</label>
+              <label htmlFor={option.name}>{option.name}</label>
             </Radio>
           ))}
         </RadioButtonsWrapper>

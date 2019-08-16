@@ -4,10 +4,10 @@ import CreatePalette from '../components/CreatePalette'
 export default props => {
   return (
     <AppContext.Consumer>
-      {({ user, setShowConfirm, setShowRegister }) => {
+      {({ user, setShowConfirm, setShowRegister, refetchPalettes }) => {
         if (!user) return setShowRegister(true)
         if (!user.confirmed) return setShowConfirm(true)
-        return <CreatePalette />
+        return <CreatePalette refetchPalettes={refetchPalettes} />
       }}
     </AppContext.Consumer>
   )

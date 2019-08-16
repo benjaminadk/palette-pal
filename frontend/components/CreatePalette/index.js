@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { CREATE_PALETTE_MUTATION } from '../../apollo/mutation/createPalette'
+import { TOTAL_PALETTES_QUERY } from '../../apollo/query/totalPalettes'
 import TextInput from '../TextInput'
 import ColorInput from '../ColorInput'
 import Svg from '../Svg'
@@ -19,14 +20,15 @@ import {
 
 const initalColors = ['', '', '', '', '', '', '']
 
-const CreatePalette = props => {
+const CreatePalette = ({ refetchPalettes }) => {
   const [title, setTitle] = useState('')
   const [colors, setColors] = useState(() => initalColors)
   const [gradient, setGradient] = useState('linear')
   const [gradientDirection, setGradientDirection] = useState('0deg')
 
   const [createPalette, { error }] = useMutation(CREATE_PALETTE_MUTATION, {
-    variables: { title, colors }
+    variables: { title, colors },
+    refetchQueries: [{ query: TOTAL_PALETTES_QUERY }]
   })
 
   function onTitleChange(e) {
@@ -38,6 +40,7 @@ const CreatePalette = props => {
     const res = await createPalette()
 
     if (res.data.createPalette.success) {
+      refetchPalettes()
       setTitle('')
       setColors(() => initalColors)
       Router.push({ pathname: '/palette', query: { id: res.data.createPalette.palette.id } })
@@ -82,9 +85,7 @@ const CreatePalette = props => {
               <Svg name='radial' onClick={() => setGradient('radial')} />
               <Svg name='top-right' onClick={() => onDirection('-45deg')} />
             </CreateActions>
-            <CreateButton onClick={onCreatePalette}>
-              <Svg name='check' />
-            </CreateButton>
+            <CreateButton onClick={onCreatePalette}>Create</CreateButton>
           </CreateBottom>
         </CreateForm>
       </CreateWrapper>
